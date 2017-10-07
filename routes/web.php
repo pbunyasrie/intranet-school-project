@@ -11,6 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/test', function () {
+
+	$client = \Vaites\ApacheTika\Client::make('/usr/local/Cellar/tika/1.16/libexec/tika-app-1.16.jar');
+	$text = $client->getText('/tmp/test.pdf');
+	$metadata = $client->getMetadata('/tmp/test.pdf');
+
+    return view('welcome', compact('text', 'metadata'));
 });
