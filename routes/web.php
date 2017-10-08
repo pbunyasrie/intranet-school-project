@@ -23,4 +23,8 @@ Route::get('/SearchQuery', 'HomeController@search');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/download/{filename}', 'HomeController@download')->name('download');
+
+
+Route::post('/upload', 'HomeController@upload')->name('upload');

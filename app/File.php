@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class File extends Model
 {
+    protected $fillable = ['project_id', 'filename', 'filepath', 'contents', 'metadata'];
+
     use Searchable;
 
     protected $indexConfigurator = FileIndexConfigurator::class;
@@ -31,11 +33,11 @@ class File extends Model
                 'type' => 'string',
                 'analyzer' => 'english'
             ],
-            'extension' => [
-                'type' => 'string',
-                'analyzer' => 'english'
+            'filepath' => [
+                'type' => 'text',
+                'index' => 'not_analyzed'
             ],
-            'metadatas' => [
+            'extension' => [
                 'type' => 'string',
                 'analyzer' => 'english'
             ],
@@ -65,4 +67,20 @@ class File extends Model
     {
         return $this->belongsTo('App\Project');
     }
+
+    public function getContentsExcerpt($search, $maxLength=100) {
+        $str = $this->contents;
+        $startPos = stripos($str, $search); // case insensitive
+        if(strlen($str) > $maxLength) {
+            $excerpt   = substr($str, $startPos, $maxLength-3);
+            $lastSpace = strrpos($excerpt, ' ');
+            $excerpt   = substr($excerpt, 0, $lastSpace);
+            $excerpt  .= '...';
+        } else {
+            $excerpt = $str;
+        }
+        
+        return $excerpt;
+    }
+
 }

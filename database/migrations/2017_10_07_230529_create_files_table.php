@@ -18,9 +18,9 @@ class CreateFilesTable extends Migration
             $table->integer('project_id')->unsigned()->index();
             $table->foreign('project_id')->references('id')->on('projects');
             $table->string('filename');
+            $table->string('filepath'); // location stored on disk
             $table->string('extension')->nullable();
-            $table->string('metadata')->nullable();
-            $table->string('contents')->nullable();
+            $table->text('contents')->nullable();
             $table->timestamps();
         });
     }
