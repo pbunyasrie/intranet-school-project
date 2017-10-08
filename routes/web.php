@@ -19,6 +19,7 @@ Route::get('/test', function () {
 
     return view('welcome', compact('text', 'metadata'));
 });
+Route::get('/SearchQuery', 'HomeController@search');
 
 Auth::routes();
 

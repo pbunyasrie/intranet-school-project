@@ -18,6 +18,26 @@
 
                     <br />
                     Your role: {{ Auth::user()->roles()->get()[0]->name }}
+
+                    <form id="elasticScout" action="/SearchQuery" method="get">
+                         <div class="mysearchbar">
+                             <input name="search" value="{{ $query }}" placeholder="Search...">
+                         </div>
+                    </form>
+
+
+                    @if(!empty($files))
+                        @foreach($files as $file)
+                            <h1>{{ $file->filename }} </h1>
+                            Metadata: <br />
+                            {{ $file->metadata }}
+                            <br /><br />
+                            Contents: <br />
+                            {{ $file->contents }}
+                        @endforeach
+                    @endif
+
+
                 </div>
             </div>
         </div>
