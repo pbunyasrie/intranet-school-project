@@ -38,7 +38,7 @@ class HomeController extends Controller
 
     public function search(Request $request){
         $query = "";
-        if($request->has('search')){
+        if($request->has('search') && !empty($request->input('search'))){
           $files = File::search($request->input('search'))->get();
           $query = $request->input('search');
         }
