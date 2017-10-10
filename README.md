@@ -8,6 +8,7 @@ Built using the Laravel PHP framework.
 
 ## Requirements
 * PHP 7+
+* Java 1.7+
 * [composer](https://getcomposer.org/)
 * [tika](https://tika.apache.org/)
 * [elasticsearch](https://www.elastic.co/products/elasticsearch)
@@ -30,6 +31,11 @@ Assuming all of the requirements are installed:
 If you are using MacOS, you can use homebrew to easily install all of the requirements for a quick development environment:
 
 * [PHP/MySQL/Nginx](https://laravel.com/docs/5.5/valet#installation)
+* brew cask install java
 * brew install tika
 * brew install tesseract
 * brew install elasticsearch
+
+Then make sure Elasticsearch is started:
+
+* brew services start elasticsearch
