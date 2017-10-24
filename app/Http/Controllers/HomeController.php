@@ -60,10 +60,21 @@ class HomeController extends Controller
 
                 $fullpath = storage_path('app/' . $filepath);
 
+
+                #set_include_path('/usr/local/bin/');
+
                 // Read the contents
-                $client = \Vaites\ApacheTika\Client::make('/usr/local/Cellar/tika/1.16/libexec/tika-app-1.16.jar');
+		// $client = \Vaites\ApacheTika\Client::make('/usr/local/Cellar/tika/1.16/libexec/tika-app-1.16.jar');
+		// TODO: Make this asynchronous
+                $client = \Vaites\ApacheTika\Client::make('localhost', 9998, [CURLOPT_TIMEOUT => 600]); // timeout after 10 minutes
 
                 $text = $client->getText($fullpath);
+
+
+                // putenv('PATH=' . getenv('PATH') . PATH_SEPARATOR . '/usr/local/bin/' . PATH_SEPARATOR . '/usr/bin/' . PATH_SEPARATOR . '/bin/' . PATH_SEPARATOR . '/usr/sbin/' );
+
+                // dd(phpinfo());
+                // dd($text); // show the parsed text from Tika
                 // $metadata = $client->getMetadata($fullpath);
 
                 // Save the file information into the search engine/database so that it is easily searchable
