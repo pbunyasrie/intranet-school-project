@@ -39,3 +39,8 @@ If you are using MacOS, you can use homebrew to easily install all of the requir
 Then make sure Elasticsearch is started:
 
 * brew services start elasticsearch
+
+### Vagrant
+* [Install Vagrant](https://www.vagrantup.com/docs/installation/)
+* vagrant plugin install vagrant-vbguest
+* vagrant up
