@@ -20,7 +20,7 @@ class CreateFilesTable extends Migration
             $table->string('filename');
             $table->string('filepath'); // location stored on disk
             $table->string('extension')->nullable();
-            $table->text('contents')->nullable();
+            $table->longtext('contents')->nullable();
             $table->timestamps();
         });
     }
