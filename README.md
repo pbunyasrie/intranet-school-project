@@ -42,5 +42,6 @@ Then make sure Elasticsearch is started:
 
 ### Vagrant
 * [Install Vagrant](https://www.vagrantup.com/docs/installation/)
+* Copy .env.example to .env (don't change the database settings)
 * vagrant plugin install vagrant-vbguest
 * vagrant up

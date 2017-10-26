@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     # Common utilities
     apt-get update -y
-    apt-get install mlocate ack curl vim htop net-tools vim psmisc git nfs-common apt-transport-https lsb-release ca-certificates cronolog zsh -y
+    apt-get install daemon mlocate ack curl vim htop net-tools vim psmisc git nfs-common apt-transport-https lsb-release ca-certificates cronolog zsh -y
     
     # PHP
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -147,11 +147,6 @@ y
 EOF
 
 echo "bind-address = stretch" >> /etc/mysql/mariadb.conf.d/50-server.cnf
-
-    # Create the database
-    php artisan config:clear
-    mysql -u root --password="secret" -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost'     IDENTIFIED BY 'secret'       WITH GRANT OPTION; FLUSH PRIVILEGES; drop database project; create database project COLLATE 'utf8_unicode_ci'"
-    php artisan migrate:fresh --seed
 
     # Install Apache Tika
     TIKA_VERSION="1.16"
@@ -251,6 +246,7 @@ EOF
     #apt-get install openjdk-8-jre-headless -y
     #apt --fix-broken install -y
     #cp /root/tika-server.deb/etc/init.d/tika /etc/init.d/tika
+    useradd tika
     chmod 755 /etc/init.d/tika
 
     # Install Elasticsearch
@@ -267,12 +263,18 @@ EOF
     systemctl restart php7.2-fpm 
     systemctl restart apache2
     service tika start
-    systemctl status elasticsearch
+    systemctl start elasticsearch
     systemctl enable php7.2-fpm
     systemctl enable apache2
     systemctl enable mariadb
     systemctl enable tika
     systemctl enable elasticsearch
+
+    # Create the database
+    php artisan config:clear
+    mysql -u root --password="secret" -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost'     IDENTIFIED BY 'secret'       WITH GRANT OPTION; FLUSH PRIVILEGES; create database project COLLATE 'utf8_unicode_ci'"
+    php artisan migrate:fresh --seed
+
 
     # Create the elasticsearch indices for our app
     php artisan elastic:create-index "\App\FileIndexConfigurator"
