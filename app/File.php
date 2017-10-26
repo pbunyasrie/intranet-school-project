@@ -63,9 +63,9 @@ class File extends Model
         return $array;
     }
 
-    public function project()
+    public function folder()
     {
-        return $this->belongsTo('App\Project');
+        return $this->belongsTo('App\Folder');
     }
 
     public function getContentsExcerpt($search, $maxLength=100) {

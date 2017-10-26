@@ -31,18 +31,18 @@
           </p>
           <ul class="menu-list">
             <li><a class="is-active">Dashboard</a></li>
-            <li><a>Project List</a></li>
+            <li><a>Folder List</a></li>
           </ul>
           <p class="menu-label">
             Administration
           </p>
           <ul class="menu-list">
             <li>
-              <a>Projects</a>
+              <a>Folder</a>
               <ul>
-                <li><a>New project</a></li>
-                <li><a>Edit project</a></li>
-                <li><a>Delete project</a></li>
+                <li><a>New folder</a></li>
+                <li><a>Edit folder</a></li>
+                <li><a>Delete folder</a></li>
               </ul>
             </li>
             <li>
@@ -100,8 +100,8 @@
             </div>
             <div class="tile is-parent">
               <article class="tile is-child box">
-                <p class="title">{{ \App\Project::all()->count() }}</p>
-                <p class="subtitle">Projects</p>
+                <p class="title">{{ \App\Folder::all()->count() }}</p>
+                <p class="subtitle">Folders</p>
               </article>
             </div>
             <div class="tile is-parent">
