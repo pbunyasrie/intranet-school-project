@@ -4,10 +4,11 @@ namespace App;
 
 use ScoutElastic\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use ScoutElastic\IndexConfigurator;
 
 class File extends Model
 {
-    protected $fillable = ['project_id', 'filename', 'filepath', 'contents', 'metadata'];
+    protected $fillable = ['folder_id', 'filename', 'filepath', 'contents', 'metadata'];
 
     use Searchable;
 
@@ -25,7 +26,7 @@ class File extends Model
                 'type' => 'integer',
                 'index' => 'not_analyzed'
             ],
-	        'project_id' => [
+	        'folder_id' => [
                 'type' => 'integer',
                 'index' => 'not_analyzed'
             ],

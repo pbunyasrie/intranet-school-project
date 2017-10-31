@@ -12,12 +12,13 @@
 */
 
 
-Route::get('/SearchQuery', 'HomeController@search');
 
 Auth::routes();
 
+Route::get('/SearchQuery', 'SearchController@search');
+
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/download/{filename}', 'HomeController@download')->name('download');
+Route::get('/download/{filename}', 'DownloadController@download')->name('download');
 
 
-Route::post('/upload', 'HomeController@upload')->name('upload');
+Route::post('/upload', 'UploadController@upload')->name('upload');
