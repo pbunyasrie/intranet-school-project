@@ -15,8 +15,8 @@ class CreateFilesTable extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('project_id')->unsigned()->index();
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->integer('folder_id')->unsigned()->index();
+            $table->foreign('folder_id')->references('id')->on('folders');
             $table->string('filename');
             $table->string('filepath'); // location stored on disk
             $table->string('extension')->nullable();
