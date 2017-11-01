@@ -19,11 +19,11 @@ class SearchController extends Controller
 
     public function search(Request $request){
         $query = "";
-        if($request->has('search') && !empty($request->input('search'))){
-          $files = File::search($request->input('search'))->get();
-          $query = $request->input('search');
+        if($request->has('query') && !empty($request->input('query'))){
+          $files = File::search($request->input('query'))->get();
+          $query = $request->input('query');
         }
-       return view('home', compact('files', 'query'));
+       return view('searchresults', compact('files', 'query'));
     }
 
     /**

@@ -66,7 +66,7 @@ class UploadController extends Controller
             
         // }
 
-        return redirect()->route('home');
+        return redirect()->route('dashboard');
     }
 
     /**

@@ -15,7 +15,24 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-@yield('content')
+
+@include('layouts.nav')
+
+<div class="container">
+  <div class="columns">
+	@include('layouts.menu')
+
+	<!-- START CONTENT -->
+	@yield('content')
+	<!-- END CONTENT -->
+
+	<!-- START FOOTER -->
+	@include('layouts.footer')
+	@yield('footer_js')
+	<!-- END FOOTER -->
+
+  </div>
 </div>
+
 </body>
 </html>

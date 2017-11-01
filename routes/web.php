@@ -15,9 +15,9 @@
 
 Auth::routes();
 
-Route::get('/SearchQuery', 'SearchController@search');
+Route::get('/search', 'SearchController@search')->name('search');
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('dashboard');
 Route::get('/download/{filename}', 'DownloadController@download')->name('download');
 
 
