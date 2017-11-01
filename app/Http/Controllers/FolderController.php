@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Folder;
 
 class FolderController extends Controller
 {
@@ -22,8 +23,8 @@ class FolderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    { 
+       return view('folders');
     }
 
     /**
@@ -53,9 +54,9 @@ class FolderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Folder $folder)
     {
-        //
+       return view('folders.folder', compact('folder'));
     }
 
     /**

@@ -12,7 +12,7 @@
       </p>
       <ul class="menu-list">
         <li><a @if(\Request::route()->getName() == "dashboard") class="is-active" @endif href="{{ route('dashboard') }}">Dashboard</a></li>
-        <li><a>Folder List</a></li>
+        <li><a @if(\Request::route()->getName() == "folders" || \Request::route()->getName() == "folder") class="is-active" @endif href="{{ route('folders') }}">Folder List</a></li>
       </ul>
       <p class="menu-label">
         My Account

@@ -30,8 +30,8 @@
 	@include('layouts.footer')
 	@yield('footer_js')
 	<!-- END FOOTER -->
-
   </div>
+  
 </div>
 
 </body>
