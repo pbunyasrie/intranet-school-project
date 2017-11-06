@@ -16,23 +16,25 @@
 </head>
 <body>
 
-@include('layouts.nav')
+    @if(Auth::user())
+		@include('layouts.nav')
+		<div class="container">
+  			<div class="columns">
+				@include('layouts.menu')
 
-<div class="container">
-  <div class="columns">
-	@include('layouts.menu')
+				<!-- START CONTENT -->
+				@yield('content')
+				<!-- END CONTENT -->
 
-	<!-- START CONTENT -->
-	@yield('content')
-	<!-- END CONTENT -->
-
-	<!-- START FOOTER -->
-	@include('layouts.footer')
-	@yield('footer_js')
-	<!-- END FOOTER -->
-  </div>
-  
-</div>
+				<!-- START FOOTER -->
+				@include('layouts.footer')
+				@yield('footer_js')
+				<!-- END FOOTER -->
+		  </div>
+		</div>
+	@else
+		@yield('content')
+	@endif
 
 </body>
 </html>
