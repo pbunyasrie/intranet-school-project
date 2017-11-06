@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 // For file storage/uploading
 use Illuminate\Support\Facades\Storage;
 use App\File;
+use App\Folder;
 
 class UploadController extends Controller
 {
@@ -23,14 +24,15 @@ class UploadController extends Controller
     {
         // Upload the file for later retrieval
 
-        // TODO: Put it in the corresponding project folder
-        Storage::makeDirectory("project1");
+        // Store the file in the corresponding project folder
+        $folder = Folder::find($request->folder);
 
+        Storage::makeDirectory($folder->name);
         $files = $request->file('files');
 
         if(!empty($files)){
             foreach ($files as $file) {
-                $filepath = $file->store('project1');
+                $filepath = $file->store($folder->name);
 
                 $fullpath = storage_path('app/' . $filepath);
 
@@ -38,8 +40,8 @@ class UploadController extends Controller
                 #set_include_path('/usr/local/bin/');
 
                 // Read the contents
-        // $client = \Vaites\ApacheTika\Client::make('/usr/local/Cellar/tika/1.16/libexec/tika-app-1.16.jar');
-        // TODO: Make this asynchronous
+                // $client = \Vaites\ApacheTika\Client::make('/usr/local/Cellar/tika/1.16/libexec/tika-app-1.16.jar');
+                // TODO: Make this asynchronous
                 $client = \Vaites\ApacheTika\Client::make('localhost', 9998, [CURLOPT_TIMEOUT => 600]); // timeout after 10 minutes
 
                 $text = $client->getText($fullpath);
@@ -53,20 +55,26 @@ class UploadController extends Controller
 
                 // Save the file information into the search engine/database so that it is easily searchable
                 File::create([
-                    'folder_id' => 1, // TODO: corresponds to project 1 by default, this needs to be fixed
+                    'folder_id' => $folder->id,
                     'filename' => $file->getClientOriginalName(),
                     'filepath' => $filepath,
                     'contents' => $text
                 ]);
             }
         }
+        
 
         // Ensure that the upload was successful
         // if ($request->file('file')->isValid()) {
             
         // }
 
-        return redirect()->route('dashboard');
+        if($folder->id == 1){
+            return redirect()->route('folders')->with('status', 'File has been uploaded');    
+        }else{
+            return redirect()->route('folder', ['folder' => $folder->id])->with('status', 'File has been uploaded');    
+        }
+        
     }
 
     /**

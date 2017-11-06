@@ -10,7 +10,9 @@
         </ul>
       </nav>
 
-  
+      <strong>Description: {{ $folder->description }}</strong>
+      <br /><br />
+
       <section class="info-tiles">
 
           <div class="card">
@@ -28,29 +30,7 @@
                           @endforeach
                       </ul>
                   @endif
-                  <form action="/upload" method="post" enctype="multipart/form-data">
-                      {{ csrf_field() }}
-                      Files (can attach more than one):
-                      <br />
-                      <div class="file is-boxed has-name">
-                        <label class="file-label">
-                          <input class="file-input" id="file" type="file" name="files[]" multiple />
-                          <span class="file-cta">
-                            <span class="file-icon">
-                              <i class="fa fa-upload"></i>
-                            </span>
-                            <span class="file-label">
-                              Choose a file…
-                            </span>
-                          </span>
-                        <span id="filename" class="file-name">
-                         
-                        </span>
-                        </label>
-                      </div>
-                      <br /><br />
-                      <button class="button is-primary">Upload</button>
-                  </form>
+                  @include('upload.form')
               </div>
             </div>
           </div>
@@ -71,13 +51,7 @@
                 <table class="table is-fullwidth is-striped">
                   <tbody>
 
-                  @foreach (\App\File::all() as $file)
-                    <tr>
-                      <td width="5%"><i class="fa fa-file-o"></i></td>
-                      <td><a href="{{ route('download', [ 'filename' => $file->filename ]) }}">{{ $file->filename }}</a></td>
-                      <td><a class="button is-small is-primary" href="#">Action</a></td>
-                    </tr>
-                  @endforeach
+                  @include('folders.files')
                   </tbody>
                 </table>
               </div>

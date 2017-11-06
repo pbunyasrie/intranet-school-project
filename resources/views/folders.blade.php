@@ -27,29 +27,7 @@
                           @endforeach
                       </ul>
                   @endif
-                  <form action="/upload" method="post" enctype="multipart/form-data">
-                      {{ csrf_field() }}
-                      Files (can attach more than one):
-                      <br />
-                      <div class="file is-boxed has-name">
-                        <label class="file-label">
-                          <input class="file-input" id="file" type="file" name="files[]" multiple />
-                          <span class="file-cta">
-                            <span class="file-icon">
-                              <i class="fa fa-upload"></i>
-                            </span>
-                            <span class="file-label">
-                              Choose a file…
-                            </span>
-                          </span>
-                        <span id="filename" class="file-name">
-                         
-                        </span>
-                        </label>
-                      </div>
-                      <br /><br />
-                      <button class="button is-primary">Upload</button>
-                  </form>
+                  @include('upload.form')
               </div>
             </div>
           </div>
@@ -59,6 +37,7 @@
 
       <div class="columns">
         <div class="column is-12">
+
           <div class="card events-card">
             <header class="card-header">
               <p class="card-header-title">
@@ -70,21 +49,46 @@
                 <table class="table is-fullwidth is-striped">
                   <tbody>
 
-                  @foreach (\App\Folder::all() as $folder)
+                  @foreach (\App\Folder::all()->where('id', '!=', 1) as $subfolder)
                     <tr>
                       <td width="5%"><i class="fa fa-folder-o"></i></td>
-                      <td><a href="{{ route('folder', [ 'folder' => $folder ]) }}">{{ $folder->name }}</a></td>
-                      <td>{{ $folder->description }}</td>
+                      <td><a href="{{ route('folder', [ 'folder' => $subfolder ]) }}">{{ $subfolder->name }}</a></td>
+                      <td>{{ $subfolder->description }}</td>
                     </tr>
                   @endforeach
+
                   </tbody>
                 </table>
               </div>
             </div>
-          </div>        
+          </div>
+          <br />
+
+          <div class="card events-card">
+            <header class="card-header">
+              <p class="card-header-title">
+                Files not in a folder
+              </p>
+            </header>
+            <div class="card-table">
+              <div class="content">
+                <table class="table is-fullwidth is-striped">
+                  <tbody>
+                  @include('folders.files')
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>      
+
         </div>
       </div>
+
+
     </div>
+
+    <br />
+
 
 @endsection
 

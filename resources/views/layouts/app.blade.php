@@ -18,6 +18,26 @@
 
     @if(Auth::user())
 		@include('layouts.nav')
+
+
+
+		@if (session('status'))
+		<div class="container">
+			<div class="columns">
+			    <div class="column is-3">
+
+			    </div>
+			    <div class="column is-9">
+					    <div class="alert alert-success">
+					        <strong>{{ session('status') }}</strong>
+					    </div>
+			    </div>
+		 	</div>
+		 </div>
+	     <br />
+		@endif
+				
+
 		<div class="container">
   			<div class="columns">
 				@include('layouts.menu')

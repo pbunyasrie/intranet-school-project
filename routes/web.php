@@ -24,4 +24,12 @@ Route::get('/folders/{folder}', 'FolderController@show')->name('folder');
 Route::get('/download/{filename}', 'DownloadController@download')->name('download');
 
 
-Route::post('/upload', 'UploadController@upload')->name('upload');
+Route::post('/upload/{folder}', 'UploadController@upload')->name('upload');
+
+Route::get('/upload/{folder}', function ($folder) {
+	if($folder == 1){
+		return redirect()->route('folders');
+	}else{
+		return redirect()->route('folder', ['folder' => $folder]);
+	}
+});

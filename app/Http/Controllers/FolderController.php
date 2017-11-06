@@ -24,7 +24,8 @@ class FolderController extends Controller
      */
     public function index()
     { 
-       return view('folders');
+       $folder = Folder::find(1);
+       return view('folders', compact('folder'));
     }
 
     /**
