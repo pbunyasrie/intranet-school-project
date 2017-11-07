@@ -21,6 +21,9 @@ Route::get('/', 'HomeController@index')->name('dashboard');
 Route::get('/folders', 'FolderController@index')->name('folders');
 Route::get('/folders/{folder}', 'FolderController@show')->name('folder');
 
+Route::get('/folder/create', 'FolderController@create')->name('folderCreate');
+Route::post('/folder/create', 'FolderController@store')->name('folderStore');
+
 Route::get('/download/{filename}', 'DownloadController@download')->name('download');
 
 

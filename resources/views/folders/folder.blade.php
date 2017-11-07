@@ -50,7 +50,6 @@
               <div class="content">
                 <table class="table is-fullwidth is-striped">
                   <tbody>
-
                   @include('folders.files')
                   </tbody>
                 </table>

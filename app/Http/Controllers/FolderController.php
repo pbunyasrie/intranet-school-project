@@ -35,7 +35,7 @@ class FolderController extends Controller
      */
     public function create()
     {
-        //
+        return view('folders.create');
     }
 
     /**
@@ -46,7 +46,12 @@ class FolderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $folder = new Folder;
+        $folder->name = $request->name;
+        $folder->description = $request->description;
+        $folder->save();
+
+        return redirect()->route('folder', ['folder' => $folder->id])->with('status', 'Folder has been created');
     }
 
     /**

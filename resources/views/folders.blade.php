@@ -46,19 +46,38 @@
             </header>
             <div class="card-table">
               <div class="content">
+
+                @if(\App\Folder::all()->count() > 1)
+                <header class="card-header">
+                  <a href="{{ route('folderCreate')}} " class="card-footer-item">Create a folder</a>
+                </header>
                 <table class="table is-fullwidth is-striped">
                   <tbody>
-
-                  @foreach (\App\Folder::all()->where('id', '!=', 1) as $subfolder)
-                    <tr>
-                      <td width="5%"><i class="fa fa-folder-o"></i></td>
-                      <td><a href="{{ route('folder', [ 'folder' => $subfolder ]) }}">{{ $subfolder->name }}</a></td>
-                      <td>{{ $subfolder->description }}</td>
-                    </tr>
-                  @endforeach
+                      <tr>
+                        <td></td>
+                        <td>Folder Name</td>
+                        <td>Description</td>
+                      </tr>
+                    @foreach (\App\Folder::all()->where('id', '!=', 1) as $subfolder)
+                      <tr>
+                        <td width="5%"><i class="fa fa-folder-o"></i></td>
+                        <td><a href="{{ route('folder', [ 'folder' => $subfolder ]) }}">{{ $subfolder->name }}</a></td>
+                        <td>{{ $subfolder->description }}</td>
+                      </tr>
+                    @endforeach
 
                   </tbody>
                 </table>
+                @else
+                  <p>No folders yet.</p>
+                @endif
+
+                <br />
+
+                <footer class="card-footer">
+                  <a href="{{ route('folderCreate')}} " class="card-footer-item">Create a folder</a>
+                </footer>
+
               </div>
             </div>
           </div>
