@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Folder;
+use Validator;
+use Illuminate\Validation\Rule;
 
 class FolderController extends Controller
 {
@@ -46,6 +48,17 @@ class FolderController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:folders|max:255',
+            'description' => 'required|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('folderCreate')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
         $folder = new Folder;
         $folder->name = $request->name;
         $folder->description = $request->description;
@@ -73,7 +86,8 @@ class FolderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $folder = Folder::find($id);
+        return view('folders.edit', compact('folder'));
     }
 
     /**
@@ -85,7 +99,30 @@ class FolderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', Rule::unique('folders')->ignore($id)],
+            'description' => 'required|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('folderEdit', ['folder' => $id])
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $folder = Folder::find($id);
+        if(empty($folder)){
+            abort(500);
+        }
+        $folder->name = $request->name;
+        $folder->description = $request->description;
+
+        $folder->save();
+
+
+        return redirect()->route('folderEdit', ['folder' => $folder->id])->with('status', 'Folder has been updated');
+        
     }
 
     /**

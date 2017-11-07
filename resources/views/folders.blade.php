@@ -48,16 +48,15 @@
               <div class="content">
 
                 @if(\App\Folder::all()->count() > 1)
-                <header class="card-header">
-                  <a href="{{ route('folderCreate')}} " class="card-footer-item">Create a folder</a>
-                </header>
                 <table class="table is-fullwidth is-striped">
-                  <tbody>
+                  <thead>
                       <tr>
-                        <td></td>
-                        <td>Folder Name</td>
-                        <td>Description</td>
+                        <th></th>
+                        <th>Folder Name</th>
+                        <th>Description</tH>
                       </tr>
+                  </thead>
+                  <tbody>
                     @foreach (\App\Folder::all()->where('id', '!=', 1) as $subfolder)
                       <tr>
                         <td width="5%"><i class="fa fa-folder-o"></i></td>

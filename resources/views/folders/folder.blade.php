@@ -10,7 +10,8 @@
         </ul>
       </nav>
 
-      <strong>Description: {{ $folder->description }}</strong>
+      <strong>Description: {{ $folder->description }}</strong><br /> 
+      <a href="{{ route('folderEdit', ['folder' => $folder->id]) }}" class="button is-small">Edit</a>
       <br /><br />
 
       <section class="info-tiles">

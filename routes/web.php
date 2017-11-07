@@ -20,6 +20,9 @@ Route::get('/search', 'SearchController@search')->name('search');
 Route::get('/', 'HomeController@index')->name('dashboard');
 Route::get('/folders', 'FolderController@index')->name('folders');
 Route::get('/folders/{folder}', 'FolderController@show')->name('folder');
+Route::get('/folders/{folder}/edit', 'FolderController@edit')->name('folderEdit');
+Route::put('/folders/{folder}/edit', 'FolderController@update')->name('folderUpdate');
+Route::post('/folders/{folder}/delete', 'FolderController@destroy')->name('folderDestroy');
 
 Route::get('/folder/create', 'FolderController@create')->name('folderCreate');
 Route::post('/folder/create', 'FolderController@store')->name('folderStore');
