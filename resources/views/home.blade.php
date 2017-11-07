@@ -46,7 +46,32 @@
         </div>
       </section>
 
+      <br />
+
       <div class="columns">
+        <div class="column is-6">
+          <section class="info-tiles">
+              <div class="card">
+                <header class="card-header">
+                  <p class="card-header-title">
+                    Upload files
+                  </p>
+                </header>
+                <div class="card-content">
+                  <div class="content">
+                      @if (count($errors) > 0)
+                          <ul>
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>
+                              @endforeach
+                          </ul>
+                      @endif
+                      @include('upload.form')
+                  </div>
+                </div>
+              </div>
+          </section>
+        </div>
         <div class="column is-6">
           <div class="card events-card">
             <header class="card-header">
@@ -61,13 +86,12 @@
             </header>
             <div class="card-table">
               <div class="content">
-                <table class="table is-fullwidth is-striped">
+                <table class="table is-striped">
                   <tbody>
-
                   @foreach (\App\File::all() as $file)
                     <tr>
                       <td width="5%"><i class="fa fa-file-o"></i></td>
-                      <td><a href="{{ route('download', [ 'filename' => $file->filename ]) }}">{{ $file->filename }}</a></td>
+                      <td><span style="display: inline"><a href="{{ route('download', [ 'filename' => $file->filename ]) }}">{{ $file->filename }}</a></span></td>
                       <td><a class="button is-small is-primary" href="#">Action</a></td>
                     </tr>
                   @endforeach
@@ -80,51 +104,8 @@
             </footer>
           </div>        
         </div>
-        <div class="column is-6">
 
-          <div class="card">
-            <header class="card-header">
-              <p class="card-header-title">
-                Upload files
-              </p>
-            </header>
-            <div class="card-content">
-              <div class="content">
-                  @if (count($errors) > 0)
-                      <ul>
-                          @foreach ($errors->all() as $error)
-                              <li>{{ $error }}</li>
-                          @endforeach
-                      </ul>
-                  @endif
-                  <form action="/upload" method="post" enctype="multipart/form-data">
-                      {{ csrf_field() }}
-                      Files (can attach more than one):
-                      <br />
-                      <div class="file is-boxed has-name">
-                        <label class="file-label">
-                          <input class="file-input" id="file" type="file" name="files[]" multiple />
-                          <span class="file-cta">
-                            <span class="file-icon">
-                              <i class="fa fa-upload"></i>
-                            </span>
-                            <span class="file-label">
-                              Choose a file…
-                            </span>
-                          </span>
-                        <span id="filename" class="file-name">
-                         
-                        </span>
-                        </label>
-                      </div>
-                      <br /><br />
-                      <button class="button is-primary">Upload</button>
-                  </form>
-              </div>
-            </div>
-          </div>
 
-        </div>
       </div>
     </div>
 

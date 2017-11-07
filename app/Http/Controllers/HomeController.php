@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\File;
+use App\Folder;
 
 
 class HomeController extends Controller
@@ -30,8 +31,9 @@ class HomeController extends Controller
 
         // $files = Storage::allFiles('project1');
         $files = File::all();
+        $folder = Folder::find(1);
 
-        return view('home', compact('files'));
+        return view('home', compact('files', 'folder'));
     }
 
 
