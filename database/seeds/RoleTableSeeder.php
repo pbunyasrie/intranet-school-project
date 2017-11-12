@@ -7,7 +7,7 @@ class RoleTableSeeder extends Seeder
   public function run()
   {
     $role_employee = new Role();
-    $role_employee->name = 'user';
+    $role_employee->name = 'User';
     $role_employee->description = 'Hospital users (faculty, interns, groups, etc.)';
     /*
         Manage (create, edit, delete) folders for content (a folder would correspond to a specific project or group).
@@ -18,7 +18,7 @@ class RoleTableSeeder extends Seeder
     $role_employee->save();
 
     $role_manager = new Role();
-    $role_manager->name = 'surveyor';
+    $role_manager->name = 'Surveyor';
     $role_manager->description = 'A surveyor with limited access'; // Login and search for and view selected content determined by the Site Manager
     $role_manager->save();
 

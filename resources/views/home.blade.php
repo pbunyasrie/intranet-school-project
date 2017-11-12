@@ -17,7 +17,11 @@
                   Hello, {{ Auth::user()->name }}
             </h1>
             <h2 class="subtitle">
-              Your role: {{ Auth::user()->roles()->get()[0]->name }}
+              Your role: 
+              @foreach (Auth::user()->roles()->get() as $role)
+                  {{ $loop->first ? '' : ', ' }}
+                  <span class="nice">{{ $role->name }}</span>
+              @endforeach
             </h2>
           </div>
         </div>
@@ -72,6 +76,8 @@
               </div>
           </section>
         </div>
+
+        
         <div class="column is-6">
           <div class="card events-card">
             <header class="card-header">

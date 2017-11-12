@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\File;
 use App\Folder;
+use Illuminate\Support\Facades\Auth;
 
 class UploadController extends Controller
 {
@@ -22,59 +23,62 @@ class UploadController extends Controller
 
     public function upload(Request $request)
     {
-        // Upload the file for later retrieval
+        if(!Auth::user()->hasRole("Surveyor")){
+            // Upload the file for later retrieval
 
-        // Store the file in the corresponding project folder
-        $folder = Folder::find($request->folder);
+            // Store the file in the corresponding project folder
+            $folder = Folder::find($request->folder);
 
-        Storage::makeDirectory($folder->name);
-        $files = $request->file('files');
+            Storage::makeDirectory($folder->name);
+            $files = $request->file('files');
 
-        if(!empty($files)){
-            foreach ($files as $file) {
-                $filepath = $file->store($folder->name);
+            if(!empty($files)){
+                foreach ($files as $file) {
+                    $filepath = $file->store($folder->name);
 
-                $fullpath = storage_path('app/' . $filepath);
-
-
-                #set_include_path('/usr/local/bin/');
-
-                // Read the contents
-                // $client = \Vaites\ApacheTika\Client::make('/usr/local/Cellar/tika/1.16/libexec/tika-app-1.16.jar');
-                // TODO: Make this asynchronous
-                $client = \Vaites\ApacheTika\Client::make('localhost', 9998, [CURLOPT_TIMEOUT => 600]); // timeout after 10 minutes
-
-                $text = $client->getText($fullpath);
+                    $fullpath = storage_path('app/' . $filepath);
 
 
-                // putenv('PATH=' . getenv('PATH') . PATH_SEPARATOR . '/usr/local/bin/' . PATH_SEPARATOR . '/usr/bin/' . PATH_SEPARATOR . '/bin/' . PATH_SEPARATOR . '/usr/sbin/' );
+                    #set_include_path('/usr/local/bin/');
 
-                // dd(phpinfo());
-                // dd($text); // show the parsed text from Tika
-                // $metadata = $client->getMetadata($fullpath);
+                    // Read the contents
+                    // $client = \Vaites\ApacheTika\Client::make('/usr/local/Cellar/tika/1.16/libexec/tika-app-1.16.jar');
+                    // TODO: Make this asynchronous
+                    $client = \Vaites\ApacheTika\Client::make('localhost', 9998, [CURLOPT_TIMEOUT => 600]); // timeout after 10 minutes
 
-                // Save the file information into the search engine/database so that it is easily searchable
-                File::create([
-                    'folder_id' => $folder->id,
-                    'filename' => $file->getClientOriginalName(),
-                    'filepath' => $filepath,
-                    'contents' => $text
-                ]);
+                    $text = $client->getText($fullpath);
+
+
+                    // putenv('PATH=' . getenv('PATH') . PATH_SEPARATOR . '/usr/local/bin/' . PATH_SEPARATOR . '/usr/bin/' . PATH_SEPARATOR . '/bin/' . PATH_SEPARATOR . '/usr/sbin/' );
+
+                    // dd(phpinfo());
+                    // dd($text); // show the parsed text from Tika
+                    // $metadata = $client->getMetadata($fullpath);
+
+                    // Save the file information into the search engine/database so that it is easily searchable
+                    File::create([
+                        'folder_id' => $folder->id,
+                        'filename' => $file->getClientOriginalName(),
+                        'filepath' => $filepath,
+                        'contents' => $text
+                    ]);
+                }
+            }
+            
+
+            // Ensure that the upload was successful
+            // if ($request->file('file')->isValid()) {
+                
+            // }
+
+            if($folder->id == 1){
+                return redirect()->route('folders')->with('status', 'File has been uploaded');    
+            }else{
+                return redirect()->route('folder', ['folder' => $folder->id])->with('status', 'File has been uploaded');    
             }
         }
-        
 
-        // Ensure that the upload was successful
-        // if ($request->file('file')->isValid()) {
-            
-        // }
-
-        if($folder->id == 1){
-            return redirect()->route('folders')->with('status', 'File has been uploaded');    
-        }else{
-            return redirect()->route('folder', ['folder' => $folder->id])->with('status', 'File has been uploaded');    
-        }
-        
+        response('Unauthorized', 401);
     }
 
     /**

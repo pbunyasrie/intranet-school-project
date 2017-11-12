@@ -8,28 +8,28 @@ class UserTableSeeder extends Seeder
 {
   public function run()
   {
-    $role_employee = Role::where('name', 'employee')->first();
-    $role_manager  = Role::where('name', 'manager')->first();
-    $role_admin  = Role::where('name', 'admin')->first();
+    $role_employee = Role::where('name', 'User')->first();
+    $role_manager  = Role::where('name', 'Surveyor')->first();
+    $role_admin  = Role::where('name', 'Site Manager')->first();
 
     $employee = new User();
-    $employee->name = 'Employee Name';
-    $employee->email = 'employee@example.com';
-    $employee->password = bcrypt('secret');
+    $employee->name = 'User Name';
+    $employee->email = 'user@user.com';
+    $employee->password = bcrypt('user');
     $employee->save();
     $employee->roles()->attach($role_employee);
 
     $manager = new User();
-    $manager->name = 'Manager Name';
-    $manager->email = 'manager@example.com';
-    $manager->password = bcrypt('secret');
+    $manager->name = 'Surveyor Name';
+    $manager->email = 'surveyor@surveyor.com';
+    $manager->password = bcrypt('surveyor');
     $manager->save();
     $manager->roles()->attach($role_manager);
 
     $admin = new User();
-    $admin->name = 'Admin Name';
-    $admin->email = 'admin@example.com';
-    $admin->password = bcrypt('secret');
+    $admin->name = 'Site Manager Name';
+    $admin->email = 'sitemanager@sitemanager.com';
+    $admin->password = bcrypt('sitemanager');
     $admin->save();
     $admin->roles()->attach($role_admin);
   }

@@ -23,7 +23,7 @@
         </li>
       </ul>
 
-      @if(Auth::user()->roles()->get()[0]->name != "Site Manager")
+      @if(Auth::user()->hasRole("Site Manager"))
       <p class="menu-label">
         Administration
       </p>

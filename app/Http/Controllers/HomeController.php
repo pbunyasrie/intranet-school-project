@@ -27,8 +27,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $request->user()->authorizeRoles(['user']);
-
+        // $request->user()->authorizeRoles(['user']);
         // $files = Storage::allFiles('project1');
         $files = File::all();
         $folder = Folder::find(1);

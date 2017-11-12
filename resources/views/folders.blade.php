@@ -71,11 +71,13 @@
                   <p>No folders yet.</p>
                 @endif
 
+                @if(!Auth::user()->hasRole("Surveyor"))
                 <br />
 
                 <footer class="card-footer">
                   <a href="{{ route('folderCreate')}} " class="card-footer-item">Create a folder</a>
                 </footer>
+                @endif
 
               </div>
             </div>
