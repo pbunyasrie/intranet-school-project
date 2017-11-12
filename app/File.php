@@ -14,12 +14,15 @@ class File extends Model
 
     protected $indexConfigurator = FileIndexConfigurator::class;
 
+
+    // You can set several rules for one model. In this case, the first not empty result will be returned.
     protected $searchRules = [
         FileContentsSearchRule::class,
         FileMetadataSearchRule::class,
         FileFilenameSearchRule::class
     ];
 
+    // https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-analyzers.html
     protected $mapping = [
         'properties' => [
             'id' => [
@@ -32,7 +35,7 @@ class File extends Model
             ],
             'filename' => [
                 'type' => 'string',
-                'analyzer' => 'english'
+                'analyzer' => 'simple'
             ],
             'filepath' => [
                 'type' => 'text',
