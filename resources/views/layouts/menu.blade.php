@@ -19,7 +19,7 @@
       </p>
       <ul class="menu-list">
         <li>
-          <a>Settings</a>
+          <a @if(\Request::route()->getName() == "settings") class="is-active" @endif href="{{ route('settings') }}">Settings</a>
         </li>
       </ul>
 

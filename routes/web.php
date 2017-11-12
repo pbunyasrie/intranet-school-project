@@ -18,6 +18,9 @@ Auth::routes();
 Route::get('/search', 'SearchController@search')->name('search');
 
 Route::get('/', 'HomeController@index')->name('dashboard');
+
+Route::get('/settings', 'HomeController@settings')->name('settings');
+
 Route::get('/folders', 'FolderController@index')->name('folders');
 Route::get('/folders/{folder}', 'FolderController@show')->name('folder');
 Route::get('/folders/{folder}/edit', 'FolderController@edit')->name('folderEdit');

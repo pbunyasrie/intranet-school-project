@@ -35,5 +35,10 @@ class HomeController extends Controller
         return view('home', compact('files', 'folder'));
     }
 
+    public function settings()
+    {
+        return view('account.settings');
+    }
+
 
 }
