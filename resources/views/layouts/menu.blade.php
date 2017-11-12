@@ -29,12 +29,6 @@
       </p>
       <ul class="menu-list">
         <li>
-          <a>Folders</a>
-        </li>
-        <li>
-          <a>Files</a>
-        </li>
-        <li>
           <a>Users</a>
         </li>
         <li>
