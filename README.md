@@ -47,3 +47,12 @@ Then make sure Elasticsearch is started:
 * Copy .env.example to .env (don't change the database settings)
 * vagrant plugin install vagrant-vbguest
 * vagrant up
+
+## Example User Logins
+In the format of username - password:
+
+* user@user.com - user
+* surveyor@surveyor.com - surveyor
+* sitemanager@sitemanager.com - sitemanager
+
+Each login corresponds to a defined role in the system.
