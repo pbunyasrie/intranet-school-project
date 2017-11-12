@@ -15,6 +15,11 @@
 
 Auth::routes();
 
+
+Route::get('/admin/users', 'AdminController@usersShow')->name('adminUsers');
+Route::get('/admin/configuration', 'AdminController@configurationShow')->name('adminConfiguration');
+
+
 Route::get('/search', 'SearchController@search')->name('search');
 
 Route::get('/', 'HomeController@index')->name('dashboard');

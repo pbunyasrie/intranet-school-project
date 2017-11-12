@@ -29,10 +29,10 @@
       </p>
       <ul class="menu-list">
         <li>
-          <a>Users</a>
+          <a @if(\Request::route()->getName() == "adminUsers") class="is-active" @endif href="{{ route('adminUsers') }}">Users</a>
         </li>
         <li>
-          <a>Configuration</a>
+          <a @if(\Request::route()->getName() == "adminConfiguration") class="is-active" @endif href="{{ route('adminConfiguration') }}">Configuration</a>
         </li>
       </ul>
       @endif
