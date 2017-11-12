@@ -11,8 +11,19 @@
       </nav>
 
       <strong>Description: {{ $folder->description }}</strong><br /> 
-      <a href="{{ route('folderEdit', ['folder' => $folder->id]) }}" class="button is-small">Edit</a>
-      <br /><br />
+      <div class="columns">
+        <div class="column is-1">
+          <a href="{{ route('folderEdit', ['folder' => $folder->id]) }}" class="button is-small">Edit Folder</a>
+          <br /><br />
+        </div>
+        <div class="column is-1">
+          <form action="{{ route('folderDestroy', ['folder' => $folder->id]) }}" method="POST">
+            {{ csrf_field() }}
+            <input type="hidden" name="folder_id" value="{{ $folder->id }}">
+            <button class="button is-danger is-small" onclick="return confirm('Are you sure you want to delete this folder? Any files in this folder will not be deleted');">Delete Folder</button>
+          </form>
+        </div>
+      </div>
 
       <section class="info-tiles">
 

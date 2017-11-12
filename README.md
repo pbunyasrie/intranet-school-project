@@ -23,8 +23,10 @@ Assuming all of the requirements are installed:
 * Configure your APP and DB settings in .env
 * ```php artisan key:generate```
 * ```php artisan elastic:create-index "\App\FileIndexConfigurator"``` - this creates the Elasticsearch indices
+* ```php artisan elastic:create-index "\App\FolderIndexConfigurator"``` - this creates the Elasticsearch indices
 * ```php artisan migrate:refresh --seed```
 * ```php artisan elastic:update-mapping App\\File``` - this maps the models (File in this case) to Elasticsearch
+* ```php artisan elastic:update-mapping App\\Folder``` - this maps the models (File in this case) to Elasticsearch
 
 
 ## Development

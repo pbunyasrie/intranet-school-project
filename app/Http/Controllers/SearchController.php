@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\File;
+use App\Folder;
 
 class SearchController extends Controller
 {
@@ -21,9 +22,10 @@ class SearchController extends Controller
         $query = "";
         if($request->has('query') && !empty($request->input('query'))){
           $files = File::search($request->input('query'))->get();
+          $folders = Folder::search($request->input('query'))->get();
           $query = $request->input('query');
         }
-       return view('searchresults', compact('files', 'query'));
+       return view('searchresults', compact('files', 'folders', 'query'));
     }
 
     /**

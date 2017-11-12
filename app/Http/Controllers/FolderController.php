@@ -92,7 +92,7 @@ class FolderController extends Controller
     {
         if(!Auth::user()->hasRole("Surveyor")){
             $folder = Folder::find($id);
-            return view('folders.folder', compact('folder'));
+            return view('folders.edit', compact('folder'));
         }
         response('Unauthorized', 401);
     }
@@ -128,7 +128,7 @@ class FolderController extends Controller
             $folder->save();
 
 
-            return redirect()->route('folderEdit', ['folder' => $folder->id])->with('status', 'Folder has been updated');
+            return redirect()->route('folder', ['folder' => $folder->id])->with('status', 'Folder has been updated');
         }
         response('Unauthorized', 401);
     }
@@ -139,10 +139,19 @@ class FolderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         if(!Auth::user()->hasRole("Surveyor")){
+            // Move all files from this folder to the "Files not in a folder" folder
+            $files = \App\File::where('folder_id', $request->folder_id)->get();
 
+            foreach ($files as $file) {
+                $file->folder_id = 1; // files with no folder goes to ID 1
+                $file->save();
+            }
+
+            Folder::destroy($request->folder_id);         
+            return redirect()->route('folders')->with('status', 'Folder has been deleted');
         }
         response('Unauthorized', 401);
     }

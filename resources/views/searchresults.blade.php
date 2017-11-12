@@ -10,6 +10,23 @@
     </ul>
   </nav>
 
+      @if(!empty($folders) && !empty($query))
+          <strong>Found {{ count($folders) }} folders</strong>
+          <br />
+          <ul>
+          @foreach($folders as $folder)
+              <li><strong><a href="{{ route('folder', [ 'folder' => $folder->id ]) }}">{{ $folder->name }}</a></strong>
+                <br />
+                {{ $folder->description }}
+                <br /><br />
+              </li>
+          @endforeach
+          </ul>
+      @else
+        <strong>Found 0 folders</strong>
+      @endif
+      <br />
+
       @if(!empty($files) && !empty($query))
           <strong>Found {{ count($files) }} files</strong>
           <br />
