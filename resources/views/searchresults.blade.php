@@ -16,9 +16,13 @@
           <ul>
           @foreach($folders as $folder)
               <li><strong><a href="{{ route('folder', [ 'folder' => $folder->id ]) }}">{{ $folder->name }}</a></strong>
+                <p>
+                  <em>Created on {{ $folder->created_at }}</em>
+                </p>
+                <p>
+                  <blockquote>{{ $folder->description }}</blockquote>
+                </p>
                 <br />
-                {{ $folder->description }}
-                <br /><br />
               </li>
           @endforeach
           </ul>
@@ -33,9 +37,13 @@
           <ul>
           @foreach($files as $file)
               <li><strong><a href="{{ route('download', [ 'filename' => $file->filename ]) }}">{{ $file->filename }}</a></strong>
+                <p>
+                  <em>Uploaded on {{ $file->created_at }}</em>
+                </p>
+                <p>
+                  <blockquote>{{ $file->getContentsExcerpt($query) }}</blockquote>
+                </p>
                 <br />
-                {{ $file->getContentsExcerpt($query) }}
-                <br /><br />
               </li>
           @endforeach
           </ul>

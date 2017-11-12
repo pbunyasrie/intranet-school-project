@@ -53,6 +53,7 @@
                       <tr>
                         <th></th>
                         <th>Folder Name</th>
+                        <th>Creation Date</th>
                         <th>Description</tH>
                       </tr>
                   </thead>
@@ -61,6 +62,7 @@
                       <tr>
                         <td width="5%"><i class="fa fa-folder-o"></i></td>
                         <td><a href="{{ route('folder', [ 'folder' => $subfolder ]) }}">{{ $subfolder->name }}</a></td>
+                        <td>{{ $subfolder->created_at }}</td>
                         <td>{{ $subfolder->description }}</td>
                       </tr>
                     @endforeach
