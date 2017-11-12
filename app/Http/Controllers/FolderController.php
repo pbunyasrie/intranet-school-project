@@ -7,6 +7,7 @@ use App\Folder;
 use Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class FolderController extends Controller
 {
@@ -66,6 +67,8 @@ class FolderController extends Controller
             $folder->description = $request->description;
             $folder->save();
 
+            Log::info(Auth::user()->email . ' created the folder "' . $folder->name . '"');
+
             return redirect()->route('folder', ['folder' => $folder->id])->with('status', 'Folder has been created');
         }
         response('Unauthorized', 401);
@@ -124,8 +127,8 @@ class FolderController extends Controller
             }
             $folder->name = $request->name;
             $folder->description = $request->description;
-
             $folder->save();
+            Log::info(Auth::user()->email . ' updated the folder "' . $folder->name . '"');
 
 
             return redirect()->route('folder', ['folder' => $folder->id])->with('status', 'Folder has been updated');
@@ -149,7 +152,7 @@ class FolderController extends Controller
                 $file->folder_id = 1; // files with no folder goes to ID 1
                 $file->save();
             }
-
+            Log::info(Auth::user()->email . ' deleted the folder "' . Folder::find($request->folder_id)->name . '"');
             Folder::destroy($request->folder_id);         
             return redirect()->route('folders')->with('status', 'Folder has been deleted');
         }

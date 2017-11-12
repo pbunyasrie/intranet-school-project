@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\File;
 use App\Folder;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class SearchController extends Controller
 {
@@ -24,7 +26,10 @@ class SearchController extends Controller
           $files = File::search($request->input('query'))->get();
           $folders = Folder::search($request->input('query'))->get();
           $query = $request->input('query');
+
+          Log::info(Auth::user()->email . ' searched for "' . $query . '"');
         }
+
        return view('searchresults', compact('files', 'folders', 'query'));
     }
 

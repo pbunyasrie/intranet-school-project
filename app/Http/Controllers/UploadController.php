@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\File;
 use App\Folder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UploadController extends Controller
 {
@@ -63,19 +64,21 @@ class UploadController extends Controller
                         'contents' => $text
                     ]);
                 }
+
+                Log::info(Auth::user()->email . ' uploaded file "' . $file->getClientOriginalName() . '"');
+
+                // Ensure that the upload was successful
+                // if ($request->file('file')->isValid()) {
+                    
+                // }
+
+                if($folder->id == 1){
+                    return redirect()->route('folders')->with('status', 'File has been uploaded');    
+                }else{
+                    return redirect()->route('folder', ['folder' => $folder->id])->with('status', 'File has been uploaded');    
+                }
             }
             
-
-            // Ensure that the upload was successful
-            // if ($request->file('file')->isValid()) {
-                
-            // }
-
-            if($folder->id == 1){
-                return redirect()->route('folders')->with('status', 'File has been uploaded');    
-            }else{
-                return redirect()->route('folder', ['folder' => $folder->id])->with('status', 'File has been uploaded');    
-            }
         }
 
         response('Unauthorized', 401);

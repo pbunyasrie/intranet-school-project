@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\File;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class DownloadController extends Controller
 {
@@ -23,6 +25,8 @@ class DownloadController extends Controller
         $filepath = storage_path('app/' . $file->filepath);
         if (File::exists($filepath)){
             // $fileContents = Storage::disk('local')->get($file->filepath); // grabs the contents of the file
+
+            Log::info(Auth::user()->email . ' downloaded "'. $filename . '"" from the folder "' . $file->folder()->first()->name . '"');
             return response()->download($filepath, $filename);
         }else{
             abort(404);
