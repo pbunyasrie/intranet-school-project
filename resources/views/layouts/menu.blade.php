@@ -36,7 +36,7 @@
       @endif
 
         <br />
-        <a class="button is-warning" href="{{ route('logout') }}"
+        <a class="button is-info" href="{{ route('logout') }}"
             onclick="event.preventDefault();
                      document.getElementById('logout-form').submit();">
             Logout

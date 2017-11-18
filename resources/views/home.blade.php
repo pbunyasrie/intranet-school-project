@@ -53,32 +53,8 @@
       <br />
 
       <div class="columns">
-        <div class="column is-6">
-          <section class="info-tiles">
-              <div class="card">
-                <header class="card-header">
-                  <p class="card-header-title">
-                    Upload files
-                  </p>
-                </header>
-                <div class="card-content">
-                  <div class="content">
-                      @if (count($errors) > 0)
-                          <ul>
-                              @foreach ($errors->all() as $error)
-                                  <li>{{ $error }}</li>
-                              @endforeach
-                          </ul>
-                      @endif
-                      @include('upload.form')
-                  </div>
-                </div>
-              </div>
-          </section>
-        </div>
-
         
-        <div class="column is-6">
+        <div class="column is-12">
           <div class="card events-card">
             <header class="card-header">
               <p class="card-header-title">
@@ -98,7 +74,7 @@
                     <tr>
                       <td width="5%"><i class="fa fa-file-o"></i></td>
                       <td><span style="display: inline"><a href="{{ route('download', [ 'filename' => $file->filename ]) }}">{{ $file->filename }}</a></span></td>
-                      <td><a class="button is-small is-primary" href="#">Action</a></td>
+                      <td><a class="button is-small is-warning" href="{{ route('folder', ['folder' => ($file->folder()->first())->id ]) }}">{{ ($file->folder()->first())->name }}</a></td>
                     </tr>
                   @endforeach
                   </tbody>

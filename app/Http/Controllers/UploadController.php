@@ -78,6 +78,7 @@ class UploadController extends Controller
                     return redirect()->route('folder', ['folder' => $folder->id])->with('status', 'File has been uploaded');    
                 }
             }
+            return back();
             
         }
 

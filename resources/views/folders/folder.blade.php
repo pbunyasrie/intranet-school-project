@@ -10,23 +10,38 @@
         </ul>
       </nav>
 
-      <strong>Description: {{ $folder->description }}</strong><br /> 
+      <p>
+        <h1 class="title">{{ $folder->name }}</h1>
+        <h2 class="subtitle">{{ $folder->description }}</h2>
+      </p>
       <div class="columns">
-        <div class="column is-1">
-          <a href="{{ route('folderEdit', ['folder' => $folder->id]) }}" class="button is-small">Edit Folder</a>
-          <br /><br />
+        {{-- Don't allow the deletion of default folder --}}
+        @if($folder->id != 1)
+        <div class="column is-2">
+          <a href="{{ route('folderEdit', ['folder' => $folder->id]) }}" class="button is-small">Edit this folder</a>
         </div>
-        <div class="column is-1">
-          <form action="{{ route('folderDestroy', ['folder' => $folder->id]) }}" method="POST">
-            {{ csrf_field() }}
-            <input type="hidden" name="folder_id" value="{{ $folder->id }}">
-            <button class="button is-danger is-small" onclick="return confirm('Are you sure you want to delete this folder? Any files in this folder will not be deleted');">Delete Folder</button>
-          </form>
-        </div>
+        @endif
       </div>
 
-      <section class="info-tiles">
 
+      <div class="columns">
+        <div class="column is-9">
+          <div class="card events-card message is-warning">
+            <header class="card-header message-header">
+              <p class="card-header-title">
+                Files in this folder
+              </p>
+            </header>
+            <div class="card-table">
+              <div class="content">
+                  @include('folders.files')
+              </div>
+            </div>
+          </div>        
+        </div>
+
+
+        <div class="column is-3">
           <div class="card">
             <header class="card-header">
               <p class="card-header-title">
@@ -46,29 +61,9 @@
               </div>
             </div>
           </div>
-      </section>
-
-      <br />
-
-      <div class="columns">
-        <div class="column is-12">
-          <div class="card events-card">
-            <header class="card-header">
-              <p class="card-header-title">
-                Files in this folder
-              </p>
-            </header>
-            <div class="card-table">
-              <div class="content">
-                <table class="table is-fullwidth is-striped">
-                  <tbody>
-                  @include('folders.files')
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>        
         </div>
+
+
       </div>
     </div>
 
@@ -88,6 +83,12 @@ file.onchange = function(){
 
     }
 };
+function toggle(source,name) {
+  checkboxes = document.getElementsByName(name);
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
 </script>
 
 @endsection

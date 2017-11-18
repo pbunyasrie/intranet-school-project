@@ -9,9 +9,76 @@
         </ul>
       </nav>
 
-  
-      <section class="info-tiles">
+      <div class="columns">
+        <div class="column is-9">
 
+          <div class="card events-card message is-warning">
+            <header class="card-header message-header">
+              <p class="card-header-title">
+                Folder List
+              </p>
+            </header>
+            <div class="card-table">
+              <div class="content">
+                @if(\App\Folder::all()->count() > 1)
+                <table class="table is-fullwidth is-striped">
+                  <thead>
+                      <tr>
+                        <th><input class="checkbox" onClick="toggle(this,'folder')" name="checkall" type="checkbox"></th>
+                        <th></th>
+                        <th>Folder Name</th>
+                        <th>Creation Date</th>
+                        <th>Description</tH>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    @foreach (\App\Folder::all()->where('id', '!=', 1) as $subfolder)
+                      <tr>
+                        <td width="5%"><input class="checkbox" name="folder" value="{{ $subfolder->id }}" type="checkbox"></td>
+                        <td width="5%"><i class="fa fa-folder-o"></i></td>
+                        <td><a href="{{ route('folder', [ 'folder' => $subfolder ]) }}">{{ $subfolder->name }}</a></td>
+                        <td>{{ $subfolder->created_at }}</td>
+                        <td>{{ $subfolder->description }}</td>
+                      </tr>
+                    @endforeach
+
+                  </tbody>
+                </table>
+                @else
+                  <p>No folders yet.</p>
+                @endif
+
+                @if(!Auth::user()->hasRole("Surveyor"))
+                <div style="padding:20px">
+                    <p>
+                      <a href="{{ route('folderCreate')}} " class="button is-warning is-small">Create a new folder</a>
+                      <button class="button is-danger is-small" onclick="return confirm('Are you sure you want to delete the selected folders?');">Delete Selected Folders</button>
+                    </p>
+                </div>
+                @endif
+
+              </div>
+            </div>
+          </div>
+          <br />
+
+          <div class="card events-card">
+            <header class="card-header">
+              <p class="card-header-title">
+                Files not in a folder
+              </p>
+            </header>
+            <div class="card-table">
+              <div class="content">
+                  @include('folders.files')
+              </div>
+            </div>
+          </div>      
+
+        </div>
+
+
+        <div class="column is-3">
           <div class="card">
             <header class="card-header">
               <p class="card-header-title">
@@ -31,82 +98,10 @@
               </div>
             </div>
           </div>
-      </section>
-
-      <br />
-
-      <div class="columns">
-        <div class="column is-12">
-
-          <div class="card events-card">
-            <header class="card-header">
-              <p class="card-header-title">
-                Folder List
-              </p>
-            </header>
-            <div class="card-table">
-              <div class="content">
-
-                @if(\App\Folder::all()->count() > 1)
-                <table class="table is-fullwidth is-striped">
-                  <thead>
-                      <tr>
-                        <th></th>
-                        <th>Folder Name</th>
-                        <th>Creation Date</th>
-                        <th>Description</tH>
-                      </tr>
-                  </thead>
-                  <tbody>
-                    @foreach (\App\Folder::all()->where('id', '!=', 1) as $subfolder)
-                      <tr>
-                        <td width="5%"><i class="fa fa-folder-o"></i></td>
-                        <td><a href="{{ route('folder', [ 'folder' => $subfolder ]) }}">{{ $subfolder->name }}</a></td>
-                        <td>{{ $subfolder->created_at }}</td>
-                        <td>{{ $subfolder->description }}</td>
-                      </tr>
-                    @endforeach
-
-                  </tbody>
-                </table>
-                @else
-                  <p>No folders yet.</p>
-                @endif
-
-                @if(!Auth::user()->hasRole("Surveyor"))
-                <br />
-
-                <footer class="card-footer">
-                  <a href="{{ route('folderCreate')}} " class="card-footer-item">Create a folder</a>
-                </footer>
-                @endif
-
-              </div>
-            </div>
-          </div>
-          <br />
-
-          <div class="card events-card">
-            <header class="card-header">
-              <p class="card-header-title">
-                Files not in a folder
-              </p>
-            </header>
-            <div class="card-table">
-              <div class="content">
-                <table class="table is-fullwidth is-striped">
-                  <tbody>
-                  @include('folders.files')
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>      
-
         </div>
+
+
       </div>
-
-
     </div>
 
     <br />
@@ -128,6 +123,13 @@ file.onchange = function(){
 
     }
 };
+
+function toggle(source, name) {
+  checkboxes = document.getElementsByName(name);
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
 </script>
 
 @endsection

@@ -36,7 +36,7 @@
           <br />
           <ul>
           @foreach($files as $file)
-              <li><strong><a href="{{ route('download', [ 'filename' => $file->filename ]) }}">{{ $file->filename }}</a></strong>
+              <li><strong><a class="button is-warning is-small" href="{{ route('folder', ['folder' => ($file->folder()->first())->id ]) }}">{{ ($file->folder()->first())->name }}</a> <a href="{{ route('download', [ 'filename' => $file->filename ]) }}">{{ $file->filename }}</a></strong>
                 <p>
                   <em>Uploaded on {{ $file->created_at }}</em>
                 </p>
