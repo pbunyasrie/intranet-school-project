@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\User;
+use App\Folder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -39,6 +40,25 @@ class AdminController extends Controller
         }
         response('Unauthorized', 401);
     }
+
+    public function usersAccessShow($user)
+    {
+        if(Auth::user()->hasRole("Site Manager")){
+            $user = User::find($user);
+            return view('admin.usersAccess', compact('user'));
+        }
+        response('Unauthorized', 401);
+    }
+
+    public function foldersAccessShow($folder)
+    {
+        if(Auth::user()->hasRole("Site Manager")){
+            $folder = Folder::find($folder);
+            return view('admin.foldersAccess', compact('folder'));
+        }
+        response('Unauthorized', 401);
+    }
+
 
 
 }

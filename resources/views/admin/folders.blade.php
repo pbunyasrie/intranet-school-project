@@ -5,7 +5,7 @@
       <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
           <li><a href="../">Home</a></li>
-          <li class="is-active"><a href="#" aria-current="page">Folders</a></li>
+          <li class="is-active"><a href="#" aria-current="page">Folders (Administration)</a></li>
         </ul>
       </nav>
 
@@ -39,7 +39,7 @@
                         <td width="5%"><i class="fa fa-folder-o"></i></td>
                         <td>{{ $folder->name }}</td>
                         <td>{{ $folder->description }}</td>
-                        <td><a class="button is-small is-warning">Manage user access</a></td>
+                        <td><a class="button is-small is-warning" href="{{ route('adminFoldersAccess', ['folder' => $folder->id])}}">Manage user access</a></td>
                       </tr>
                     @endforeach
 

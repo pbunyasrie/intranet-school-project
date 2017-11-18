@@ -27,10 +27,10 @@
       </p>
       <ul class="menu-list">
         <li>
-          <a @if(\Request::route()->getName() == "adminUsers") class="is-active" @endif href="{{ route('adminUsers') }}">Users</a>
+          <a @if(\Request::route()->getName() == "adminUsers" || \Request::route()->getName() == "adminUsersAccess") class="is-active" @endif href="{{ route('adminUsers') }}">Users</a>
         </li>
         <li>
-          <a @if(\Request::route()->getName() == "adminFolders") class="is-active" @endif href="{{ route('adminFolders') }}">Folders</a>
+          <a @if(\Request::route()->getName() == "adminFolders" || \Request::route()->getName() == "adminFoldersAccess") class="is-active" @endif href="{{ route('adminFolders') }}">Folders</a>
         </li>
       </ul>
       @endif

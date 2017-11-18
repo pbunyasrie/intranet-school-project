@@ -5,7 +5,7 @@
       <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
           <li><a href="../">Home</a></li>
-          <li class="is-active"><a href="#" aria-current="page">Users</a></li>
+          <li class="is-active"><a href="#" aria-current="page">Users (Administration)</a></li>
         </ul>
       </nav>
 
@@ -54,7 +54,7 @@
                             </select>
                           </div>
                         </td>
-                        <td><a class="button is-small is-warning">Manage folder access</a></td>
+                        <td><a class="button is-small is-warning" href="{{ route('adminUsersAccess', ['user' => $user->id])}}">Manage folder access</a></td>
                       </tr>
                     @endforeach
 
