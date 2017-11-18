@@ -5,8 +5,6 @@
   <div class="column is-3">
     <aside class="menu">
 
-      @include('layouts.search')
-
       <p class="menu-label">
         General
       </p>

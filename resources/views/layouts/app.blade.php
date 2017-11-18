@@ -17,8 +17,18 @@
 <body>
 
     @if(Auth::user())
-		@include('layouts.nav')
-
+    
+		<div class="container">
+			<div class="columns">
+			    <div class="column is-9">
+					@include('layouts.nav')
+			    </div>
+			    <div class="column is-3">
+      				@include('layouts.search')
+			    </div>
+		 	</div>
+		 </div>
+	     <br />
 
 
 		@if (session('status'))
