@@ -17,7 +17,7 @@ Auth::routes();
 
 
 Route::get('/admin/users', 'AdminController@usersShow')->name('adminUsers');
-Route::get('/admin/configuration', 'AdminController@configurationShow')->name('adminConfiguration');
+Route::get('/admin/folders', 'AdminController@foldersShow')->name('adminFolders');
 
 
 Route::get('/search', 'SearchController@search')->name('search');
