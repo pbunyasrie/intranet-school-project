@@ -15,7 +15,7 @@
           <div class="card">
             <header class="card-header">
               <p class="card-header-title">
-                Folder Administration
+                Folder Administration - {{ \App\Folder::all()->where('id', '!=', 1)->count() }} folders
               </p>
             </header>
             <div class="card-content">

@@ -15,7 +15,7 @@
           <div class="card events-card message is-warning">
             <header class="card-header message-header">
               <p class="card-header-title">
-                Folder List
+                Folders ({{ \App\Folder::all()->where('id', '!=', 1)->count() }})
               </p>
             </header>
             <div class="card-table">

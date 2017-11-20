@@ -15,7 +15,7 @@
           <div class="card">
             <header class="card-header">
               <p class="card-header-title">
-                User Administration
+                User Administration - {{ \App\User::all()->count() }} users
               </p>
             </header>
             <div class="card-content">
