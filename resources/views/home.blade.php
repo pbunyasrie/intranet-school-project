@@ -68,6 +68,8 @@
             </header>
             <div class="card-table">
               <div class="content">
+
+                @if(\App\File::all()->count() > 0)
                 <table class="table is-striped">
                   <tbody>
                   @foreach (\App\File::all() as $file)
@@ -79,11 +81,14 @@
                   @endforeach
                   </tbody>
                 </table>
+                @else
+                  <div style="padding:20px">
+                    <p>No files yet.</p>
+                  </div>
+                @endif
               </div>
             </div>
-            <footer class="card-footer">
-              <a href="#" class="card-footer-item">View All</a>
-            </footer>
+                                    
           </div>        
         </div>
 

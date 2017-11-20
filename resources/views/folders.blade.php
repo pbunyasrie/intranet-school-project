@@ -20,7 +20,7 @@
             </header>
             <div class="card-table">
               <div class="content">
-                @if(\App\Folder::all()->count() > 1)
+                @if(\App\Folder::all()->count() > 0)
                 <table class="table is-fullwidth is-striped">
                   <thead>
                       <tr>
@@ -45,7 +45,9 @@
                   </tbody>
                 </table>
                 @else
-                  <p>No folders yet.</p>
+                  <div style="padding:20px">
+                    <p>No folders yet.</p>
+                  </div>
                 @endif
 
                 @if(!Auth::user()->hasRole("Surveyor"))
