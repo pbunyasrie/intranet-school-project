@@ -20,7 +20,7 @@
             </header>
             <div class="card-table">
               <div class="content">
-                @if(\App\Folder::all()->count() > 0)
+                @if(\App\Folder::all()->where('id', '!=', 1)->count() > 0)
                 <table class="table is-fullwidth is-striped">
                   <thead>
                       <tr>

@@ -27,10 +27,13 @@
       </p>
       <ul class="menu-list">
         <li>
-          <a @if(\Request::route()->getName() == "adminUsers" || \Request::route()->getName() == "adminUsersAccess") class="is-active" @endif href="{{ route('adminUsers') }}">Users</a>
+          <a @if(\Request::route()->getName() == "adminUsers" || \Request::route()->getName() == "adminUsersAccess") class="is-active" @endif href="{{ route('adminUsers') }}">User Management</a>
         </li>
         <li>
-          <a @if(\Request::route()->getName() == "adminFolders" || \Request::route()->getName() == "adminFoldersAccess") class="is-active" @endif href="{{ route('adminFolders') }}">Folders</a>
+          <a @if(\Request::route()->getName() == "adminFolders" || \Request::route()->getName() == "adminFoldersAccess") class="is-active" @endif href="{{ route('adminFolders') }}">Folder Management</a>
+        </li>
+        <li>
+          <a @if(\Request::route()->getName() == "adminSendMessage" || \Request::route()->getName() == "adminSendMessage") class="is-active" @endif href="{{ route('adminSendMessage') }}">Send Message</a>
         </li>
       </ul>
       @endif

@@ -5,7 +5,7 @@
       <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
           <li><a href="../">Home</a></li>
-          <li class="is-active"><a href="#" aria-current="page">Folders (Administration)</a></li>
+          <li class="is-active"><a href="#" aria-current="page">Folder Management</a></li>
         </ul>
       </nav>
 
@@ -21,7 +21,7 @@
             <div class="card-content">
               <div class="content">
                   
-                @if(\App\Folder::all()->where('id', '!=', 1)->count() > 1)
+                @if(\App\Folder::all()->where('id', '!=', 1)->count() > 0)
                 <table class="table is-fullwidth is-striped">
                   <thead>
                       <tr>
@@ -29,7 +29,7 @@
                         <th></th>
                         <th>Folder Name</th>
                         <th>Description</th>
-                        <th>User Access</tH>
+                        <th>User Access</th>
                       </tr>
                   </thead>
                   <tbody>

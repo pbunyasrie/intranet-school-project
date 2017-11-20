@@ -59,6 +59,13 @@ class AdminController extends Controller
         response('Unauthorized', 401);
     }
 
+    public function sendMessage()
+    {
+        if(Auth::user()->hasRole("Site Manager")){
+            return view('admin.sendMessage');
+        }
+        response('Unauthorized', 401);
+    }
 
 
 }
