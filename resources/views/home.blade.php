@@ -37,7 +37,7 @@
           </div>
           <div class="tile is-parent">
             <article class="tile is-child box">
-              <p class="title">{{ \App\Folder::all()->count() }}</p>
+              <p class="title">{{ \App\Folder::all()->where('id', '!=', 1)->count() }}</p>
               <p class="subtitle">Folders</p>
             </article>
           </div>
