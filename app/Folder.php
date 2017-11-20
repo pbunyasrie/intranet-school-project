@@ -55,4 +55,13 @@ class Folder extends Model
 
         return $array;
     }
+
+    public function getLastUpdatedAttribute(){
+        if($this->files()->count() > 0){
+            return $this->files()->get()->sortByDesc('updated_at')->pluck('updated_at')->first();    
+        }
+
+        return $this->created_at;
+        
+    }
 }

@@ -28,6 +28,9 @@
                         <th><input class="checkbox" onClick="toggle(this,'folder')" name="checkall" type="checkbox"></th>
                         <th></th>
                         <th>Folder Name</th>
+                        <th># of Files</th>
+                        <th>Created On</th>
+                        <th>Last Updated</th>
                         <th>Description</th>
                         <th>User Access</th>
                       </tr>
@@ -37,7 +40,10 @@
                       <tr>
                         <td width="5%"><input class="checkbox" name="folder" value="{{ $folder->id }}" type="checkbox"></td>
                         <td width="5%"><i class="fa fa-folder-o"></i></td>
-                        <td>{{ $folder->name }}</td>
+                        <td><a href="{{ route('folder', ['folder' => $folder->id]) }}">{{ $folder->name }}</a></td>
+                        <td>{{ $folder->files()->count() }}</td>
+                        <td>{{ $folder->created_at }}</td>
+                        <td>{{ $folder->last_updated }}</td>
                         <td>{{ $folder->description }}</td>
                         <td><a class="button is-small is-warning" href="{{ route('adminFoldersAccess', ['folder' => $folder->id])}}">Manage user access</a></td>
                       </tr>

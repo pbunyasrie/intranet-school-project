@@ -27,8 +27,10 @@
                         <th><input class="checkbox" onClick="toggle(this,'folder')" name="checkall" type="checkbox"></th>
                         <th></th>
                         <th>Folder Name</th>
-                        <th>Creation Date</th>
-                        <th>Description</tH>
+                        <th>Created On</th>
+                        <th>Last Updated</th>
+                        <th># of Files</th>
+                        <th>Description</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -38,6 +40,8 @@
                         <td width="5%"><i class="fa fa-folder-o"></i></td>
                         <td><a href="{{ route('folder', [ 'folder' => $subfolder ]) }}">{{ $subfolder->name }}</a></td>
                         <td>{{ $subfolder->created_at }}</td>
+                        <td>{{ $subfolder->last_updated }}</td>
+                        <td>{{ $subfolder->files()->count() }}</td>
                         <td>{{ $subfolder->description }}</td>
                       </tr>
                     @endforeach

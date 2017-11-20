@@ -13,6 +13,10 @@
       <p>
         <h1 class="title">{{ $folder->name }}</h1>
         <h2 class="subtitle">{{ $folder->description }}</h2>
+        <p>
+          <span class="is-size-7">Created on: {{ $folder->created_at }}</span>, 
+          <span class="is-size-7">Last updated on: {{ $folder->last_updated }}</span>
+        </p>
       </p>
       <div class="columns">
         {{-- Don't allow the deletion of default folder --}}
@@ -29,7 +33,7 @@
           <div class="card events-card message is-warning">
             <header class="card-header message-header">
               <p class="card-header-title">
-                Files in this folder
+                Files in this folder ({{ $folder->files()->count() }})
               </p>
             </header>
             <div class="card-table">
