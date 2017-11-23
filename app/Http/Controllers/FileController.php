@@ -102,7 +102,7 @@ class FileController extends Controller
             if($files->count() > 0){
                 $files->each(function ($item, $key){
                     $file = File::find($item);
-                    Log::info(Auth::user()->email . ' deleted the file "' . $file->name . '"');
+                    Log::info(Auth::user()->email . ' deleted the file "' . $file->filename . '"');
                     //TODO: Delete the file on the disk too (based on the $file->filepath)
                     $file->delete();
                 });   
