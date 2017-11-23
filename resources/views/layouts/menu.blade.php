@@ -35,6 +35,9 @@
         <li>
           <a @if(\Request::route()->getName() == "adminSendMessage" || \Request::route()->getName() == "adminSendMessage") class="is-active" @endif href="{{ route('adminSendMessage') }}">Send Message</a>
         </li>
+        <li>
+          <a @if(\Request::route()->getName() == "adminLogs" || \Request::route()->getName() == "adminLogs") class="is-active" @endif href="{{ route('adminLogs') }}">Logs</a>
+        </li>
       </ul>
       @endif
 

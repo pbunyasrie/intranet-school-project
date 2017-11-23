@@ -21,6 +21,7 @@ Route::get('/admin/folders', 'AdminController@foldersShow')->name('adminFolders'
 Route::get('/admin/folders/{folder}', 'AdminController@foldersAccessShow')->name('adminFoldersAccess');
 Route::get('/admin/users/{user}', 'AdminController@usersAccessShow')->name('adminUsersAccess');
 Route::get('/admin/sendMessage', 'AdminController@sendMessage')->name('adminSendMessage');
+Route::get('/admin/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('adminLogs')->middleware('auth');
 
 
 Route::get('/search', 'SearchController@search')->name('search');
