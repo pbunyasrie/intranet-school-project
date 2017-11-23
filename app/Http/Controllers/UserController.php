@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\User;
+use App\Role;
 
 class UserController extends Controller
 {
@@ -76,9 +80,28 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        if(Auth::user()->hasRole("Site Manager")){
+            $roles = collect($request->input('role'));
+            $users = collect($request->input('user'));
+
+            if($users->count() > 0){
+                $users->each(function ($item, $key) use($roles){
+                    $user = User::find($item);
+                    $role = Role::find($roles[$item]);
+                    $user->roles()->sync($role);
+
+                    Log::info(Auth::user()->email . ' updated the user "' . $user->email . '" to ' . $role->name);
+                    $user->save();
+                });   
+
+                return redirect()->back()->with('status', 'The selected users have been updated');
+            }else{
+                return redirect()->back()->with('status', 'No users were selected');
+            }
+        }
+        response('Unauthorized', 401);
     }
 
     /**
@@ -87,8 +110,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete(Request $request)
     {
-        //
+        if(Auth::user()->hasRole("Site Manager")){
+            $users = collect($request->input('user'));
+
+            if($users->count() > 0){
+                $users->each(function ($item, $key){
+
+                    $user = User::find($item);
+
+                    Log::info(Auth::user()->email . ' deleted the user "' . $user->email . '"');
+                    $user->delete();
+                });   
+
+                return redirect()->back()->with('status', 'The selected users have been deleted');
+            }else{
+                return redirect()->back()->with('status', 'No users were selected');
+            }
+        }
+        response('Unauthorized', 401);
+        
     }
 }

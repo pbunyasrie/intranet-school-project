@@ -22,10 +22,12 @@
               <div class="content">
                   
                 @if(\App\User::all()->count() > 1)
+                <form name="user-management" method="POST">
+                {{ csrf_field() }}
                 <table class="table is-fullwidth is-striped">
                   <thead>
                       <tr>
-                        <th><input class="checkbox" onClick="toggle(this,'user')" name="checkall" type="checkbox"></th>
+                        <th><input class="checkbox" onClick="toggle(this,'user[]')" name="checkall" type="checkbox"></th>
                         <th></th>
                         <th>User Name</th>
                         <th>E-mail</th>
@@ -36,13 +38,18 @@
                   <tbody>
                     @foreach (\App\User::all() as $user)
                       <tr>
-                        <td width="5%"><input class="checkbox" name="user" value="{{ $user->id }}" type="checkbox"></td>
+                        <td width="5%">
+                            @if($user != Auth::user())
+                              <input class="checkbox" name="user[]" value="{{ $user->id }}" type="checkbox">
+                            @endif
+                        </td>
                         <td width="5%"><i class="fa fa-user-o"></i></td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
+                          @if($user != Auth::user())
                           <div class="select">
-                            <select>
+                            <select name="role[{{$user->id}}]">
                               <option value="">-Select role-</option>
                               @foreach (\App\Role::all() as $role)
                                 @if(($user->roles()->first())->id == $role->id)
@@ -53,8 +60,13 @@
                               @endforeach
                             </select>
                           </div>
+                          @endif
                         </td>
-                        <td><a class="button is-small is-warning" href="{{ route('adminUsersAccess', ['user' => $user->id])}}">Manage folder access</a></td>
+                        <td>
+                          @if($user != Auth::user())
+                            <a class="button is-small is-warning" href="{{ route('adminUsersAccess', ['user' => $user->id])}}">Manage folder access</a>
+                          @endif
+                        </td>
                       </tr>
                     @endforeach
 
@@ -62,9 +74,9 @@
                 </table>
 
 
-                <button class="button is-info is-small" onclick="return confirm('Are you sure you want to update the selected users?');">Update Roles of Selected Users</button>
+                <button class="button is-info is-small" onclick="setAction(this.form, 'PUT'); return confirm('Are you sure you want to update the selected users?');">Update Roles of Selected Users</button>
 
-                <button class="button is-danger is-small" onclick="return confirm('Are you sure you want to delete the selected users?');">Delete Selected Users</button>
+                <button class="button is-danger is-small" onclick="setAction(this.form, 'DELETE'); return confirm('Are you sure you want to delete the selected users?');">Delete Selected Users</button>
 
                 @else
                   <p>No users yet.</p>
@@ -85,10 +97,33 @@
 @section('footer_js')
 <script>
   function toggle(source, name) {
-  checkboxes = document.getElementsByName(name);
-  for(var i=0, n=checkboxes.length;i<n;i++) {
-    checkboxes[i].checked = source.checked;
+    checkboxes = document.getElementsByName(name);
+    for(var i=0, n=checkboxes.length;i<n;i++) {
+      checkboxes[i].checked = source.checked;
+    }
   }
-}
+
+  function setAction (e, action)   
+  { 
+    /* Insert a hidden input into the form to set the page as a parameter. 
+     */ 
+    var input = document.createElement("input"); 
+    input.setAttribute("type","hidden"); 
+    input.setAttribute("name","_method"); 
+    input.setAttribute("value",action);   
+    e.appendChild(input); 
+
+    /* Change the form's action. This doesn't chage which page is displayed, 
+     * it just make the URL look right. 
+     */ 
+    if(action == "PUT"){
+      e.action = '{{ route('updateUsers') }}';   
+    }else if(name == "DELETE"){
+      e.action = '{{ route('deleteUsers') }}';   
+    }
+    
+    // element.form.submit(); 
+    return false;
+  }
 </script>
 @endsection
