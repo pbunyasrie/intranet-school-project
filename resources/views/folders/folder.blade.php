@@ -21,9 +21,11 @@
       <div class="columns">
         {{-- Don't allow the deletion of default folder --}}
         @if($folder->id != 1)
-        <div class="column is-2">
-          <a href="{{ route('folderEdit', ['folder' => $folder->id]) }}" class="button is-small">Edit this folder</a>
-        </div>
+          @if(!Auth::user()->hasRole("Surveyor"))
+          <div class="column is-2">
+            <a href="{{ route('folderEdit', ['folder' => $folder->id]) }}" class="button is-small">Edit this folder</a>
+          </div>
+          @endif
         @endif
       </div>
 

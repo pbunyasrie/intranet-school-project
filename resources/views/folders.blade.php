@@ -21,10 +21,13 @@
             <div class="card-table">
               <div class="content">
                 @if(\App\Folder::all()->where('id', '!=', 1)->count() > 0)
+                <form action="{{ route('deleteFolders') }}" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                {{ csrf_field() }}
                 <table class="table is-fullwidth is-striped">
                   <thead>
                       <tr>
-                        <th><input class="checkbox" onClick="toggle(this,'folder')" name="checkall" type="checkbox"></th>
+                        <th><input class="checkbox" onClick="toggle(this,'folder[]')" name="checkall" type="checkbox"></th>
                         <th></th>
                         <th>Folder Name</th>
                         <th>Created On</th>
@@ -36,7 +39,7 @@
                   <tbody>
                     @foreach (\App\Folder::all()->where('id', '!=', 1) as $subfolder)
                       <tr>
-                        <td width="5%"><input class="checkbox" name="folder" value="{{ $subfolder->id }}" type="checkbox"></td>
+                        <td width="5%"><input class="checkbox" name="folder[]" value="{{ $subfolder->id }}" type="checkbox"></td>
                         <td width="5%"><i class="fa fa-folder-o"></i></td>
                         <td><a href="{{ route('folder', [ 'folder' => $subfolder ]) }}">{{ $subfolder->name }}</a></td>
                         <td>{{ $subfolder->created_at }}</td>
@@ -55,12 +58,15 @@
                 @endif
 
                 @if(!Auth::user()->hasRole("Surveyor"))
-                <div style="padding:20px">
-                    <p>
-                      <a href="{{ route('folderCreate')}} " class="button is-warning is-small">Create a new folder</a>
-                      <button class="button is-danger is-small" onclick="return confirm('Are you sure you want to delete the selected folders?');">Delete Selected Folders</button>
-                    </p>
-                </div>
+                  <div style="padding:20px">
+                      <p>
+                        <a href="{{ route('folderCreate')}} " class="button is-warning is-small">Create a new folder</a>
+                        @if(\App\Folder::all()->where('id', '!=', 1)->count() > 0)
+                        <button class="button is-danger is-small" onclick="return confirm('Are you sure you want to delete the selected folders?');">Delete Selected Folders</button>
+                        </form>
+                        @endif
+                      </p>
+                  </div>
                 @endif
 
               </div>

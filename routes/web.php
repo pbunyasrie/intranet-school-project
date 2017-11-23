@@ -34,6 +34,8 @@ Route::get('/folders/{folder}', 'FolderController@show')->name('folder');
 Route::get('/folders/{folder}/edit', 'FolderController@edit')->name('folderEdit');
 Route::put('/folders/{folder}/edit', 'FolderController@update')->name('folderUpdate');
 Route::post('/folders/{folder}/delete', 'FolderController@destroy')->name('folderDestroy');
+Route::delete('/folders', 'FolderController@delete')->name('deleteFolders');
+Route::delete('/files', 'FileController@delete')->name('deleteFiles');
 
 Route::get('/folder/create', 'FolderController@create')->name('folderCreate');
 Route::post('/folder/create', 'FolderController@store')->name('folderStore');

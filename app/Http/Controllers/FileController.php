@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\File;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class FileController extends Controller
 {
@@ -90,5 +92,27 @@ class FileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete(Request $request)
+    {
+        if(!Auth::user()->hasRole("Surveyor")){
+            $files = collect($request->input('file'));
+
+            if($files->count() > 0){
+                $files->each(function ($item, $key){
+                    $file = File::find($item);
+                    Log::info(Auth::user()->email . ' deleted the file "' . $file->name . '"');
+                    //TODO: Delete the file on the disk too (based on the $file->filepath)
+                    $file->delete();
+                });   
+
+                return redirect()->back()->with('status', 'The selected files have been deleted');
+            }else{
+                return redirect()->back()->with('status', 'No files were selected');
+            }
+        }
+        response('Unauthorized', 401);
+
     }
 }

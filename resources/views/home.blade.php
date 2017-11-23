@@ -60,11 +60,6 @@
               <p class="card-header-title">
                 Recently Uploaded Files
               </p>
-              <a href="#" class="card-header-icon" aria-label="more options">
-                <span class="icon">
-                  <i class="fa fa-angle-down" aria-hidden="true"></i>
-                </span>
-              </a>
             </header>
             <div class="card-table">
               <div class="content">
