@@ -96,7 +96,7 @@ class FileController extends Controller
 
     public function delete(Request $request)
     {
-        if(!Auth::user()->hasRole("Site Manager")){
+        if(!Auth::user()->hasRole("Surveyor")){
             $files = collect($request->input('file'));
 
             if($files->count() > 0){

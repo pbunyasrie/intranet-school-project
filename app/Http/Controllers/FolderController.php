@@ -162,7 +162,7 @@ class FolderController extends Controller
 
     public function delete(Request $request)
     {
-        if(!Auth::user()->hasRole("Site Manager")){
+        if(Auth::user()->hasRole("Site Manager")){
             $folders = collect($request->input('folder'));
 
             if($folders->count() > 0){
