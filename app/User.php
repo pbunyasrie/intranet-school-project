@@ -27,12 +27,21 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public static function getUsersByRole($role){
+      return User::all()->map(function($user) use ($role) { 
+        if($user->hasRole($role)){
+          return $user;
+        }
+      })->filter();
+    }
+
     public function roles()
     {
       return $this
         ->belongsToMany('App\Role')
         ->withTimestamps();
     }
+
     public function authorizeRoles($roles)
     {
       if ($this->hasAnyRole($roles)) {

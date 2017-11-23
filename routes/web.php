@@ -26,6 +26,7 @@ Route::get('/admin/sendMessage', 'AdminController@sendMessage')->name('adminSend
 Route::get('/search', 'SearchController@search')->name('search');
 
 Route::get('/', 'HomeController@index')->name('dashboard');
+Route::get('/help', 'HomeController@help')->name('help');
 
 Route::get('/settings', 'HomeController@settings')->name('settings');
 

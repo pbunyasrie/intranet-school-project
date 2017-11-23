@@ -20,10 +20,10 @@
     
 		<div class="container">
 			<div class="columns">
-			    <div class="column is-9">
+			    <div class="column is-8">
 					@include('layouts.nav')
 			    </div>
-			    <div class="column is-3">
+			    <div class="column is-4">
       				@include('layouts.search')
 			    </div>
 		 	</div>

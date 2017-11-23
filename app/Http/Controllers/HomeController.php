@@ -40,5 +40,10 @@ class HomeController extends Controller
         return view('account.settings');
     }
 
+    public function help()
+    {
+        return view('help');
+    }
+
 
 }
