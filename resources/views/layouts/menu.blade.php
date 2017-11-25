@@ -3,8 +3,15 @@
 <!-- START MENU -->
 
   <div class="column is-3">
-    <aside class="menu">
 
+
+    <div class="navbar-burger burger" data-target="navMenu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    
+    <aside id="navMenu" class="menu navbar-menu">
       <p class="menu-label">
         General
       </p>

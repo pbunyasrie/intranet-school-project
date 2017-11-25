@@ -1,7 +1,7 @@
 
     <!-- START SEARCH -->
 	<div class="content">
-		<div class="columns">
+		<div class="columns is-mobile">
 			<div class="column is-9">
 			    <form id="elasticScout" action="{{ route('search') }}" method="get">
 			      <div class="control has-icons-left has-icons-right">
@@ -17,7 +17,7 @@
 		        <a class="button is-warning" href="{{ route('help') }}">
 		            Help
 		        </a>
-		       </div>
-		    </div>
+		     </div>
+		</div>
 	</div>
     <!-- END SEARCH -->
