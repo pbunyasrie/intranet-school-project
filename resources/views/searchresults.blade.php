@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="column is-9">
+<div class="column is-6">
   <nav class="breadcrumb" aria-label="breadcrumbs">
     <ul>
       <li><a href="../">Home</a></li>
@@ -53,4 +53,34 @@
 
 </div>
 
+<div class="column is-3">
+  <div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Filter
+      </p>
+    </header>
+    <div class="card-content">
+      <div class="content">
+        <form id="elasticScout" action="{{ route('search') }}" method="get">
+          <input name="query" type="hidden" value="{{ $query }}">
+          Document type:
+          <br />
+          <div class="select">
+            <select name="type">
+              <option @if(!$type) selected @endif value="">Everything</option>
+              @foreach (\App\File::all()->pluck('extension')->unique() as $extension)
+                  <option value="{{ $extension }}" @if($type && $type == $extension) selected @endif>{{ $extension }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <br /><br />
+          
+          <button class="button is-primary">Filter</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection

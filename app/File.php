@@ -17,9 +17,10 @@ class File extends Model
 
     // You can set several rules for one model. In this case, the first not empty result will be returned.
     protected $searchRules = [
-        FileContentsSearchRule::class,
-        FileMetadataSearchRule::class,
-        FileFilenameSearchRule::class
+        // FileContentsSearchRule::class,
+        // FileMetadataSearchRule::class,
+        // FileExtensionSearchRule::class,
+        // FileFilenameSearchRule::class
     ];
 
     // https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-analyzers.html
@@ -43,7 +44,7 @@ class File extends Model
             ],
             'extension' => [
                 'type' => 'string',
-                'analyzer' => 'english'
+                'analyzer' => 'whitespace'
             ],
             'contents' => [
                 'type' => 'string',

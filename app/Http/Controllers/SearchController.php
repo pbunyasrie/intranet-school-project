@@ -21,16 +21,24 @@ class SearchController extends Controller
     }
 
     public function search(Request $request){
-        $query = "";
-        if($request->has('query') && !empty($request->input('query'))){
-          $files = File::search($request->input('query'))->get();
-          $folders = Folder::search($request->input('query'))->get();
-          $query = $request->input('query');
-
-          Log::info(Auth::user()->email . ' searched for "' . $query . '"');
+        $query = $request->input('query');
+        $type = $request->input('type');
+        
+        if(empty($query)){
+            $query = "";
+        }
+        
+        if($type){
+            $files = File::search($query)->where('extension', $type)->get();  
+        }else{
+            $files = File::search($query)->get();  
         }
 
-       return view('searchresults', compact('files', 'folders', 'query'));
+        $folders = Folder::search($query)->get();
+
+        Log::info(Auth::user()->email . ' searched for "' . $query . '"');
+
+        return view('searchresults', compact('files', 'folders', 'query', 'type'));
     }
 
     /**
