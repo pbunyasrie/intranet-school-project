@@ -61,6 +61,7 @@ class UploadController extends Controller
                         'folder_id' => $folder->id,
                         'filename' => $file->getClientOriginalName(),
                         'filepath' => $filepath,
+                        'extension' => pathinfo($fullpath, PATHINFO_EXTENSION),
                         'contents' => $text
                     ]);
                 }

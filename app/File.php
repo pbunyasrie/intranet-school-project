@@ -8,7 +8,7 @@ use ScoutElastic\IndexConfigurator;
 
 class File extends Model
 {
-    protected $fillable = ['folder_id', 'filename', 'filepath', 'contents', 'metadata'];
+    protected $fillable = ['folder_id', 'filename', 'filepath', 'contents', 'metadata', 'extension'];
 
     use Searchable;
 
