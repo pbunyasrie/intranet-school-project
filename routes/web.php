@@ -21,6 +21,8 @@ Route::get('/admin/folders', 'AdminController@foldersShow')->name('adminFolders'
 Route::get('/admin/folders/{folder}', 'AdminController@foldersAccessShow')->name('adminFoldersAccess');
 Route::post('/admin/folders/{folder}', 'AdminController@grantFolderAccess')->name('grantFolderAccess');
 Route::delete('/admin/folders/{folder}', 'AdminController@revokeFolderAccess')->name('revokeFolderAccess');
+Route::post('/admin/users/{user}', 'AdminController@grantUserAccess')->name('grantUserAccess');
+Route::delete('/admin/users/{user}', 'AdminController@revokeUserAccess')->name('revokeUserAccess');
 Route::get('/admin/users/{user}', 'AdminController@usersAccessShow')->name('adminUsersAccess');
 Route::get('/admin/sendMessage', 'AdminController@sendMessage')->name('adminSendMessage');
 

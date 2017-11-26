@@ -25,22 +25,26 @@
             <div class="card-content">
               <div class="content">
                   
-                @if(\App\Folder::all()->where('id', '!=', 1)->count() > 0)
+                @if($user->foldersWithAccess()->where('id', '!=', 1)->count() > 0)
+
+                <form action="{{ route('grantUserAccess', ['user' => $user->id]) }}" method="POST">
+                {{ csrf_field() }}
+                <input type="hidden" name="_method" value="DELETE">
                 <table class="table is-fullwidth is-striped">
                  <thead>
                       <tr>
-                        <th><input class="checkbox" onClick="toggle(this,'folder')" name="checkall" type="checkbox"></th>
+                        <th><input class="checkbox" onClick="toggle(this,'AccessFolder[]')" name="checkall" type="checkbox"></th>
                         <th></th>
                         <th>Folder Name</th>
                         <th>Description</th>
                       </tr>
                   </thead>
                   <tbody>
-                    @foreach (\App\Folder::all()->where('id', '!=', 1) as $folder)
+                    @foreach ($user->foldersWithAccess()->where('id', '!=', 1) as $folder)
                       <tr>
-                        <td width="5%"><input class="checkbox" name="folder" value="{{ $folder->id }}" type="checkbox"></td>
+                        <td width="5%"><input class="checkbox" name="AccessFolder[]" value="{{ $folder->id }}" type="checkbox"></td>
                         <td width="5%"><i class="fa fa-folder-o"></i></td>
-                        <td>{{ $folder->name }}</td>
+                        <td><a href="{{ route('folder', ['folder' => $folder->id]) }}">{{ $folder->name }}</a></td>
                         <td>{{ $folder->description }}</td>
                       </tr>
                     @endforeach
@@ -49,7 +53,7 @@
                 </table>
 
                 <button class="button is-danger is-small" onclick="return confirm('Are you sure you want to revoke access from the selected folders?');">Revoke access from selected folders</button>
-
+                </form>
                 @else
                   <p>No folders yet.</p>
                 @endif
@@ -69,11 +73,13 @@
             <div class="card-content">
               <div class="content">
                   
-                @if(\App\Folder::all()->where('id', '!=', 1)->count() > 1)
+                @if($user->foldersWithNoAccess()->where('id', '!=', 1)->count() > 0)
+                <form action="{{ route('revokeUserAccess', ['user' => $user->id]) }}" method="POST">
+                {{ csrf_field() }}
                 <table class="table is-fullwidth is-striped">
                  <thead>
                       <tr>
-                        <th><input class="checkbox" onClick="toggle(this,'folder')" name="checkall" type="checkbox"></th>
+                        <th><input class="checkbox" onClick="toggle(this,'noAccessFolder[]')" name="checkall" type="checkbox"></th>
                         <th></th>
                         <th>Folder Name</th>
                         <th>Description</th>
@@ -82,20 +88,17 @@
                   <tbody>
                     @foreach (\App\Folder::all()->where('id', '!=', 1) as $folder)
                       <tr>
-                        <td width="5%"><input class="checkbox" name="folder" value="{{ $folder->id }}" type="checkbox"></td>
+                        <td width="5%"><input class="checkbox" name="noAccessFolder[]" value="{{ $folder->id }}" type="checkbox"></td>
                         <td width="5%"><i class="fa fa-folder-o"></i></td>
-                        <td>{{ $folder->name }}</td>
+                        <td><a href="{{ route('folder', ['folder' => $folder->id]) }}">{{ $folder->name }}</a></td>
                         <td>{{ $folder->description }}</td>
                       </tr>
                     @endforeach
                   </tbody>
                 </table>
 
-              User FolderAccess:<br />
-                  {{ $folderAccess }}
-
                 <button class="button is-info is-small" onclick="return confirm('Are you sure you want to give access to the selected folders?');">Give access to selected folders</button>
-
+                </form>
                 @else
                   <p>No folders yet.</p>
                 @endif

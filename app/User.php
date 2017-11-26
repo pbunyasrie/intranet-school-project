@@ -73,4 +73,41 @@ class User extends Authenticatable
       }
       return false;
     }
+
+    public function foldersAccess(){
+        return $this->manyThroughMany('App\Folder', 'App\FolderAccessUser', 'user_id', 'id', 'folder_id');
+    }
+
+    public function foldersWithAccess()
+    {
+        if($this->hasRole("Site Manager")){
+          return Folder::all();
+        }else{
+          $folders = $this->foldersAccess()->get();
+          return $folders;
+        }
+    }
+
+    public function foldersWithNoAccess()
+    {
+        if(!$this->hasRole("Site Manager")){
+          return Folder::all()->whereNotIn('id', $this->foldersWithAccess()->pluck('id')->toArray());
+        }else{
+          return;
+        }
+    }
+
+
+    public function manyThroughMany($related, $through, $firstKey, $secondKey, $pivotKey)
+    {
+        $model = new $related;
+        $table = $model->getTable();
+        $throughModel = new $through;
+        $pivot = $throughModel->getTable();
+
+        return $model
+            ->join($pivot, $pivot . '.' . $pivotKey, '=', $table . '.' . $secondKey)
+            ->select($table . '.*')
+            ->where($pivot . '.' . $firstKey, '=', $this->id);
+    }
 }

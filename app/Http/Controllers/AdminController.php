@@ -117,6 +117,59 @@ class AdminController extends Controller
         response('Unauthorized', 401);
     }
 
+    public function grantUserAccess(Request $request, $user){
+        if(Auth::user()->hasRole("Site Manager")){
+            $user = User::find($user);
+
+            if($request->has('noAccessFolder')){
+                $folders = collect($request->input('noAccessFolder'));
+                $status = "Access granted to the selected folders";
+
+                if($folders->count() > 0){
+                    $folders->each(function ($item, $key) use ($user){
+                        $folder = Folder::find($item);
+                        FolderAccessUser::firstOrCreate([
+                            'folder_id' => $folder->id,
+                            'user_id' => $user->id
+                        ]);
+                    });
+                }else{
+                    return redirect()->back()->with('status', 'No folders were selected');
+                }
+            }
+            
+            return redirect()->back()->with('status', $status);
+        }
+        response('Unauthorized', 401);
+    }
+
+    public function revokeUserAccess(Request $request, $user){
+        if(Auth::user()->hasRole("Site Manager")){
+            $user = User::find($user);
+            $status = "";
+
+            if($request->has('AccessFolder')){
+                $folders = collect($request->input('AccessFolder'));
+                $status = "Access revoked from the selected folders";
+
+                if($folders->count() > 0){
+                    $folders->each(function ($item, $key) use ($user){
+                        $folder = Folder::find($item);
+                        FolderAccessUser::where('folder_id', $folder->id)
+                                            ->where('user_id', $user->id)
+                                            ->delete();
+
+                    });
+                }else{
+                    return redirect()->back()->with('status', 'No folders were selected');
+                }
+            }
+            
+            return redirect()->back()->with('status', $status);
+        }
+        response('Unauthorized', 401);
+    }
+
     public function sendMessage()
     {
         if(Auth::user()->hasRole("Site Manager")){

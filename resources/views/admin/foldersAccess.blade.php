@@ -91,6 +91,7 @@
                         <th></th>
                         <th>User Name</th>
                         <th>E-mail</th>
+                        <th>Role</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -104,6 +105,7 @@
                         <td width="5%"><i class="fa fa-user-o"></i></td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>{{ $user->roles()->first()->name }}</td>
                       </tr>
                     @endforeach
 
