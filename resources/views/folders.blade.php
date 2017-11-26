@@ -62,7 +62,7 @@
                       <p>
                         <a href="{{ route('folderCreate')}} " class="button is-warning is-small">Create a new folder</a>
                         @if(\App\Folder::all()->where('id', '!=', 1)->count() > 0)
-                        <button class="button is-danger is-small" onclick="return confirm('Are you sure you want to delete the selected folders?');">Delete Selected Folders</button>
+                        <button class="button is-danger is-small" onclick="return confirm('Are you sure you want to delete the selected folders? Any files in the folders will be moved to the recycle bin.');">Delete Selected Folders</button>
                         </form>
                         @endif
                       </p>
@@ -73,22 +73,6 @@
             </div>
           </div>
           <br />
-
-
-          @if(Auth::user()->hasRole("Site Manager"))
-          <div class="card events-card">
-            <header class="card-header">
-              <p class="card-header-title">
-                Recycle Bin
-              </p>
-            </header>
-            <div class="card-table">
-              <div class="content">
-                  @include('folders.files')
-              </div>
-            </div>
-          </div>
-          @endif
 
         </div>
 

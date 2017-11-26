@@ -29,8 +29,7 @@ class FolderController extends Controller
      */
     public function index()
     { 
-       $folder = Folder::find(1); // this is the recycle bin
-       return view('folders', compact('folder'));
+       return view('folders');
     }
 
     /**
@@ -84,6 +83,9 @@ class FolderController extends Controller
     public function show(Folder $folder)
     {
         if(Auth::user()->isAuthorizedForFolder($folder)){
+            if($folder->id == 1 && Auth::user()->hasRole("Site Manager")){
+                return redirect()->route('recycleShow');
+            }
             return view('folders.folder', compact('folder'));
         }else{
             return redirect()->back()->with('status', 'Sorry, you don\'t have access to that folder');

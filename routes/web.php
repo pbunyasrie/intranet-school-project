@@ -25,6 +25,8 @@ Route::post('/admin/users/{user}', 'AdminController@grantUserAccess')->name('gra
 Route::delete('/admin/users/{user}', 'AdminController@revokeUserAccess')->name('revokeUserAccess');
 Route::get('/admin/users/{user}', 'AdminController@usersAccessShow')->name('adminUsersAccess');
 Route::get('/admin/sendMessage', 'AdminController@sendMessage')->name('adminSendMessage');
+Route::delete('/admin/recycle', 'AdminController@recycle')->name('recycleFiles');
+Route::get('/admin/recycle', 'AdminController@recycleShow')->name('recycleShow');
 
 Route::get('/admin/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('adminLogs')->middleware('auth');
 Route::delete('/admin/folders', 'FolderController@delete')->name('deleteFolders');

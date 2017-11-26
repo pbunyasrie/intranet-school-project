@@ -1,5 +1,10 @@
 @if($folder && $folder->files()->count() > 0)
-<form action="{{ route('deleteFiles') }}" method="POST">
+
+@if($folder->id == 1)
+	<form action="{{ route('recycleFiles') }}" method="POST">
+@else
+	<form action="{{ route('deleteFiles') }}" method="POST">
+@endif
 	<input type="hidden" name="_method" value="DELETE">
 	{{ csrf_field() }}
 	<table class="table is-fullwidth is-striped">
@@ -30,7 +35,13 @@
 
 @if($folder && $folder->files()->count() > 0 && !Auth::user()->hasRole("Surveyor"))
 <div style="padding: 15px">
-	<button class="button is-danger is-small" onclick="return confirm('Are you sure you want to delete the selected items?');">Delete Selected Files</button>
+	<button class="button is-danger is-small" onclick="return confirm('@if($folder->id == 1) Are you sure you want to permanently delete these selected items? @else Are you sure you want to delete the selected items? They will be moved to the trash, which only a Site Manager can undo @endif');">
+	@if($folder->id == 1)
+		Permanently delete
+	@else
+		Move to trash
+	@endif
+	</button>
 </div>
 </form>
 @endif

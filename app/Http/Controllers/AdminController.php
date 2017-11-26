@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\User;
+use App\File;
 use App\Folder;
 use App\FolderAccessUser;
 use Illuminate\Support\Facades\Auth;
@@ -168,6 +169,39 @@ class AdminController extends Controller
             return redirect()->back()->with('status', $status);
         }
         response('Unauthorized', 401);
+    }
+
+    public function recycle(Request $request)
+    {
+        if(Auth::user()->hasRole("Site Manager")){
+            $files = collect($request->input('file'));
+
+            if($files->count() > 0){
+                $files->each(function ($item, $key){
+                    $file = File::find($item);
+                    Log::info(Auth::user()->email . ' deleted the file "' . $file->filename . '"');
+                    //TODO: Delete the file on the disk too (based on the $file->filepath)
+                    $file->delete();
+                });   
+
+                return redirect()->back()->with('status', 'The selected files have been deleted');
+            }else{
+                return redirect()->back()->with('status', 'No files were selected');
+            }
+        }
+        response('Unauthorized', 401);
+
+    }
+
+    public function recycleShow()
+    {
+
+        if(Auth::user()->hasRole("Site Manager")){ 
+            $folder = Folder::find(1); // this is the recycle bin
+            return view('recycle', compact('folder'));
+        }
+        response('Unauthorized', 401);
+
     }
 
     public function sendMessage()

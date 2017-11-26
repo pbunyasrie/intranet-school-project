@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\File;
+use App\Folder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -100,14 +101,15 @@ class FileController extends Controller
             $files = collect($request->input('file'));
 
             if($files->count() > 0){
-                $files->each(function ($item, $key){
-                    $file = File::find($item);
-                    Log::info(Auth::user()->email . ' deleted the file "' . $file->filename . '"');
-                    //TODO: Delete the file on the disk too (based on the $file->filepath)
-                    $file->delete();
+                $recycleBin = Folder::find(1);
+                $files->each(function ($fileID, $key) use($recycleBin){
+                    $file = File::find($fileID);
+                    $file->folder()->dissociate();
+                    $file->folder()->associate($recycleBin);
+                    Log::info(Auth::user()->email . ' moved the file "' . $file->filename . '" to the recycle bin');
+                    $file->save();
                 });   
-
-                return redirect()->back()->with('status', 'The selected files have been deleted');
+                return redirect()->back()->with('status', 'The selected files have been moved to the recycle bin');
             }else{
                 return redirect()->back()->with('status', 'No files were selected');
             }

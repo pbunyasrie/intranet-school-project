@@ -76,7 +76,7 @@
 
                 <button class="button is-info is-small" onclick="setAction(this.form, 'PUT'); return confirm('Are you sure you want to update the selected users?');">Update Roles of Selected Users</button>
 
-                <button class="button is-danger is-small" onclick="setAction(this.form, 'DELETE'); return confirm('Are you sure you want to delete the selected users?');">Delete Selected Users</button>
+                <button class="button is-danger is-small" onclick="setAction(this.form, 'DELETE'); return confirm('Are you sure you want to delete the selected users? This cannot be undone.');">Delete Selected Users</button>
 
                 @else
                   <p>No users yet.</p>

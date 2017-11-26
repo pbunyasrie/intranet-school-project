@@ -14,8 +14,8 @@ class FolderTableSeeder extends Seeder
     {
         $folder = new Folder();
 	    $folder->id = 1;
-	    $folder->name = 'N/A';
-	    $folder->description = 'Files that don\'t belong to a folder';
+	    $folder->name = 'Recycle Bin';
+	    $folder->description = 'Where old files go to die';
 	    $folder->save();
     }
 }

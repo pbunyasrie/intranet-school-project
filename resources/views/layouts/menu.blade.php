@@ -33,6 +33,7 @@
         Administration
       </p>
       <ul class="menu-list">
+        <li><a @if(\Request::route()->getName() == "recycleShow") class="is-active" @endif href="{{ route('recycleShow') }}">Recycle Bin</a></li>
         <li>
           <a @if(\Request::route()->getName() == "adminUsers" || \Request::route()->getName() == "adminUsersAccess") class="is-active" @endif href="{{ route('adminUsers') }}">User Management</a>
         </li>
