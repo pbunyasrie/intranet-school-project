@@ -71,7 +71,7 @@
                     <tr>
                       <td width="5%"><i class="fa fa-file-o"></i></td>
                       <td><span style="display: inline"><a href="{{ route('download', [ 'filename' => $file->filename ]) }}">{{ $file->filename }}</a></span></td>
-                      <td><a class="button is-small is-warning" href="{{ route('folder', ['folder' => ($file->folder()->first())->id ]) }}">{{ ($file->folder()->first())->name }}</a></td>
+                      <td><a class="button is-small is-warning" href="{{ route('folder', ['folder' => ($file->folder()->first())->id ]) }}"><i class="fa fa-folder"></i> {{ ($file->folder()->first())->name }}</a></td>
                     </tr>
                   @endforeach
                   </tbody>
