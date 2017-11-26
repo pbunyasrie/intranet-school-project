@@ -25,7 +25,7 @@
             <div class="card-content">
               <div class="content">
                   
-                @if(\App\Folder::all()->where('id', '!=', 1)->count() > 1)
+                @if(\App\Folder::all()->where('id', '!=', 1)->count() > 0)
                 <table class="table is-fullwidth is-striped">
                  <thead>
                       <tr>
@@ -88,9 +88,11 @@
                         <td>{{ $folder->description }}</td>
                       </tr>
                     @endforeach
-
                   </tbody>
                 </table>
+
+              User FolderAccess:<br />
+                  {{ $folderAccess }}
 
                 <button class="button is-info is-small" onclick="return confirm('Are you sure you want to give access to the selected folders?');">Give access to selected folders</button>
 

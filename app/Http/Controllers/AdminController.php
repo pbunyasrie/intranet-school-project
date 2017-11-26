@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\User;
 use App\Folder;
+use App\FolderAccessUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -45,7 +46,8 @@ class AdminController extends Controller
     {
         if(Auth::user()->hasRole("Site Manager")){
             $user = User::find($user);
-            return view('admin.usersAccess', compact('user'));
+            $folderAccess = FolderAccessUser::all()->where('user_id', $user->id);
+            return view('admin.usersAccess', compact('user', 'folderAccess'));
         }
         response('Unauthorized', 401);
     }
@@ -54,7 +56,63 @@ class AdminController extends Controller
     {
         if(Auth::user()->hasRole("Site Manager")){
             $folder = Folder::find($folder);
-            return view('admin.foldersAccess', compact('folder'));
+            $folderAccess = FolderAccessUser::all()->where('folder_id', $folder->id);
+            return view('admin.foldersAccess', compact('folder', 'folderAccess'));
+        }
+        response('Unauthorized', 401);
+    }
+
+    public function grantFolderAccess(Request $request, $folder){
+        if(Auth::user()->hasRole("Site Manager")){
+            $folder = Folder::find($folder);
+
+            // Grant access to users
+            if($request->has('noAccessUser')){
+                $users = collect($request->input('noAccessUser'));
+                $status = "Access granted to the users";
+
+                if($users->count() > 0){
+                    $users->each(function ($item, $key) use ($folder){
+                        $user = User::find($item);
+                        FolderAccessUser::firstOrCreate([
+                            'folder_id' => $folder->id,
+                            'user_id' => $user->id
+                        ]);
+                    });
+                }else{
+                    return redirect()->back()->with('status', 'No users were selected');
+                }
+            }
+            
+            return redirect()->back()->with('status', $status);
+        }
+        response('Unauthorized', 401);
+    }
+
+    public function revokeFolderAccess(Request $request, $folder){
+        if(Auth::user()->hasRole("Site Manager")){
+            $folder = Folder::find($folder);
+            $status = "";
+
+            // Revoke access from users
+            if($request->has('AccessUser')){
+                $users = collect($request->input('AccessUser'));
+                $status = "Access revoked from users";
+
+                if($users->count() > 0){
+                    $users->each(function ($item, $key) use ($folder){
+                        $user = User::find($item);
+                        FolderAccessUser::where('folder_id', $folder->id)
+                                            ->where('user_id', $user->id)
+                                            ->delete();
+
+                    });
+                }else{
+                    return redirect()->back()->with('status', 'No users were selected');
+                }
+            }
+            
+            return redirect()->back()->with('status', $status);
         }
         response('Unauthorized', 401);
     }
