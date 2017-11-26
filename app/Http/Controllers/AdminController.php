@@ -75,6 +75,7 @@ class AdminController extends Controller
                 if($users->count() > 0){
                     $users->each(function ($item, $key) use ($folder){
                         $user = User::find($item);
+                        Log::info(Auth::user()->email . ' granted access to "' . $folder->name . '" for "' . $user->email . '"');
                         FolderAccessUser::firstOrCreate([
                             'folder_id' => $folder->id,
                             'user_id' => $user->id
@@ -103,6 +104,7 @@ class AdminController extends Controller
                 if($users->count() > 0){
                     $users->each(function ($item, $key) use ($folder){
                         $user = User::find($item);
+                        Log::info(Auth::user()->email . ' revoked access to "' . $folder->name . '" from "' . $user->email . '"');
                         FolderAccessUser::where('folder_id', $folder->id)
                                             ->where('user_id', $user->id)
                                             ->delete();
@@ -129,6 +131,7 @@ class AdminController extends Controller
                 if($folders->count() > 0){
                     $folders->each(function ($item, $key) use ($user){
                         $folder = Folder::find($item);
+                        Log::info(Auth::user()->email . ' granted access to "' . $folder->name . '" for "' . $user->email . '"');
                         FolderAccessUser::firstOrCreate([
                             'folder_id' => $folder->id,
                             'user_id' => $user->id
@@ -156,6 +159,7 @@ class AdminController extends Controller
                 if($folders->count() > 0){
                     $folders->each(function ($item, $key) use ($user){
                         $folder = Folder::find($item);
+                        Log::info(Auth::user()->email . ' revoked access to "' . $folder->name . '" from "' . $user->email . '"');
                         FolderAccessUser::where('folder_id', $folder->id)
                                             ->where('user_id', $user->id)
                                             ->delete();
