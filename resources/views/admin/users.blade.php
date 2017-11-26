@@ -21,7 +21,7 @@
             <div class="card-content">
               <div class="content">
                   
-                @if(\App\User::all()->count() > 1)
+                @if(\App\User::all()->count() > 0)
                 <form name="user-management" method="POST">
                 {{ csrf_field() }}
                 <table class="table is-fullwidth is-striped">
@@ -36,7 +36,7 @@
                       </tr>
                   </thead>
                   <tbody>
-                    @foreach (\App\User::all() as $user)
+                    @foreach (\App\User::all()->sortBy('name') as $user)
                       <tr>
                         <td width="5%">
                             @if($user != Auth::user())

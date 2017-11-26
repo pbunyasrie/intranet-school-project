@@ -12,7 +12,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach ($folder->files()->get() as $file)
+			@foreach ($folder->files()->get()->sortBy('name') as $file)
 			<tr>
 			  <td width="5%"><input class="checkbox" name="file[]" value="{{ $file->id }}" type="checkbox"></td>
 			  <td width="5%"><i class="fa fa-file-o"></i></td>

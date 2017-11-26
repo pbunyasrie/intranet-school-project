@@ -10,7 +10,7 @@
       </nav>
 
       <div class="columns">
-        <div class="column is-9">
+        <div class="column is-12">
 
           <div class="card events-card message is-warning">
             <header class="card-header message-header">
@@ -37,7 +37,7 @@
                       </tr>
                   </thead>
                   <tbody>
-                    @foreach (Auth::user()->foldersWithAccess()->where('id', '!=', 1) as $subfolder)
+                    @foreach (Auth::user()->foldersWithAccess()->where('id', '!=', 1)->sortBy('name') as $subfolder)
                       <tr>
                         <td width="5%"><input class="checkbox" name="folder[]" value="{{ $subfolder->id }}" type="checkbox"></td>
                         <td width="5%"><i class="fa fa-folder-o"></i></td>
@@ -91,30 +91,6 @@
           @endif
 
         </div>
-
-
-        <div class="column is-3">
-          <div class="card">
-            <header class="card-header">
-              <p class="card-header-title">
-                Upload files
-              </p>
-            </header>
-            <div class="card-content">
-              <div class="content">
-                  @if (count($errors) > 0)
-                      <ul>
-                          @foreach ($errors->all() as $error)
-                              <li>{{ $error }}</li>
-                          @endforeach
-                      </ul>
-                  @endif
-                  @include('upload.form')
-              </div>
-            </div>
-          </div>
-        </div>
-
 
       </div>
     </div>

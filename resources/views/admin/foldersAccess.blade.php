@@ -43,7 +43,7 @@
                       </tr>
                   </thead>
                   <tbody>
-                    @foreach ($folder->usersWithAccess() as $user)
+                    @foreach ($folder->usersWithAccess()->sortBy('name') as $user)
                       <tr>
                         <td width="5%">
                           @if($user->roles()->first()->name != "Site Manager")
@@ -95,7 +95,7 @@
                       </tr>
                   </thead>
                   <tbody>
-                    @foreach ($folder->usersWithNoAccess() as $user)
+                    @foreach ($folder->usersWithNoAccess()->sortBy('name') as $user)
                       <tr>
                         <td width="5%">
                           @if($user->roles()->first()->name != "Site Manager")
