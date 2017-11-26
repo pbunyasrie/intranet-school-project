@@ -97,6 +97,14 @@ class User extends Authenticatable
         }
     }
 
+    public function isAuthorizedForFolder(Folder $folder)
+    {
+      if($this->hasRole("Site Manager")){
+        return true;
+      }else{
+        return in_array($folder->id,$this->foldersWithAccess()->pluck("id")->toArray());  
+      }
+    }
 
     public function manyThroughMany($related, $through, $firstKey, $secondKey, $pivotKey)
     {

@@ -34,7 +34,19 @@ class SearchController extends Controller
             $files = File::search($query)->get();  
         }
 
-        $folders = Folder::search($query)->get();
+        // Make sure the user is authorized for any files found
+        $files = $files->filter(function ($file, $key){
+            if(Auth::user()->isAuthorizedForFolder($file->folder()->first())){
+                return $file;
+            }
+        });
+
+        // Make sure the user is authorized for any folders found
+        $folders = Folder::search($query)->get()->filter(function ($folder, $key){
+            if(Auth::user()->isAuthorizedForFolder($folder)){
+                return $folder;
+            }
+        });
 
         Log::info(Auth::user()->email . ' searched for "' . $query . '"');
 

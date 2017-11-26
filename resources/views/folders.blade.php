@@ -15,12 +15,12 @@
           <div class="card events-card message is-warning">
             <header class="card-header message-header">
               <p class="card-header-title">
-                Folders ({{ \App\Folder::all()->where('id', '!=', 1)->count() }})
+                Folders ({{ Auth::user()->foldersWithAccess()->where('id', '!=', 1)->count() }})
               </p>
             </header>
             <div class="card-table">
               <div class="content">
-                @if(\App\Folder::all()->where('id', '!=', 1)->count() > 0)
+                @if(Auth::user()->foldersWithAccess()->where('id', '!=', 1)->count() > 0)
                 <form action="{{ route('deleteFolders') }}" method="POST">
                 <input type="hidden" name="_method" value="DELETE">
                 {{ csrf_field() }}
@@ -37,7 +37,7 @@
                       </tr>
                   </thead>
                   <tbody>
-                    @foreach (\App\Folder::all()->where('id', '!=', 1) as $subfolder)
+                    @foreach (Auth::user()->foldersWithAccess()->where('id', '!=', 1) as $subfolder)
                       <tr>
                         <td width="5%"><input class="checkbox" name="folder[]" value="{{ $subfolder->id }}" type="checkbox"></td>
                         <td width="5%"><i class="fa fa-folder-o"></i></td>
@@ -53,11 +53,11 @@
                 </table>
                 @else
                   <div style="padding:20px">
-                    <p>No folders yet.</p>
+                    <p>N/A</p>
                   </div>
                 @endif
 
-                @if(!Auth::user()->hasRole("Surveyor"))
+                @if(Auth::user()->hasRole("Site Manager"))
                   <div style="padding:20px">
                       <p>
                         <a href="{{ route('folderCreate')}} " class="button is-warning is-small">Create a new folder</a>
@@ -74,10 +74,12 @@
           </div>
           <br />
 
+
+          @if(Auth::user()->hasRole("Site Manager"))
           <div class="card events-card">
             <header class="card-header">
               <p class="card-header-title">
-                Files not in a folder
+                Recycle Bin
               </p>
             </header>
             <div class="card-table">
@@ -85,7 +87,8 @@
                   @include('folders.files')
               </div>
             </div>
-          </div>      
+          </div>
+          @endif
 
         </div>
 

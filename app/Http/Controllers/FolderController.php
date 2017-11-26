@@ -29,7 +29,7 @@ class FolderController extends Controller
      */
     public function index()
     { 
-       $folder = Folder::find(1);
+       $folder = Folder::find(1); // this is the recycle bin
        return view('folders', compact('folder'));
     }
 
@@ -83,7 +83,11 @@ class FolderController extends Controller
      */
     public function show(Folder $folder)
     {
-       return view('folders.folder', compact('folder'));
+        if(Auth::user()->isAuthorizedForFolder($folder)){
+            return view('folders.folder', compact('folder'));
+        }else{
+            return redirect()->back()->with('status', 'Sorry, you don\'t have access to that folder');
+        }
     }
 
     /**
