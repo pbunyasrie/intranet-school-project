@@ -86,7 +86,7 @@
                       </tr>
                   </thead>
                   <tbody>
-                    @foreach (\App\Folder::all()->where('id', '!=', 1)->sortBy('name') as $folder)
+                    @foreach ($user->foldersWithNoAccess()->where('id', '!=', 1)->sortBy('name') as $folder)
                       <tr>
                         <td width="5%"><input class="checkbox" name="noAccessFolder[]" value="{{ $folder->id }}" type="checkbox"></td>
                         <td width="5%"><i class="fa fa-folder-o"></i></td>
